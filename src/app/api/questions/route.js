@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import mongoose from 'mongoose';
 
@@ -13,9 +14,7 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
   skills: [String],
   options: [{ label: String, value: Number }],
   answers: [{
-    id: String,
-    optionKey: String,
-    text: String,
+    id: String, optionKey: String, text: String,
     scores: mongoose.Schema.Types.Mixed,
     baseScoreValue: Number,
   }],
@@ -46,5 +45,5 @@ export async function GET() {
     }
     return obj;
   });
-  return Response.json({ success: true, questions: enriched });
+  return NextResponse.json({ success: true, questions: enriched });
 }

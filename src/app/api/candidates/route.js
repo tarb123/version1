@@ -1,15 +1,25 @@
- import dbConnect from '@/utils/dbConnect';
+// src/app/api/candidate/route.js
+import { NextResponse } from 'next/server';
+import dbConnect from '@/utils/dbConnect';
 import mongoose from 'mongoose';
 
-const PersonalityTest = mongoose.models.PersonalityTest;
+const PersonalityTestSchema = new mongoose.Schema({
+  name: String,
+  likertResponses: [],
+  forcedResponses: [],
+  sjtResponses: [],
+  timestamp: Date,
+});
+
+const PersonalityTest = mongoose.models.PersonalityTest || mongoose.model('PersonalityTest', PersonalityTestSchema);
 
 export async function GET() {
-  await dbConnect();
   try {
-    const all = await PersonalityTest.find({}, { name: 1, timestamp: 1, _id: 0 });
-    return Response.json(all);
-  } catch (err) {
-    console.error("❌ Error fetching candidates:", err);
-    return Response.json({ error: "❌ Failed to fetch names" }, { status: 500 });
+    await dbConnect();
+    const candidates = await PersonalityTest.find({}, { name: 1, timestamp: 1, _id: 0 });
+    return NextResponse.json(candidates);
+  } catch (error) {
+    console.error("❌ Error fetching candidates:", error);
+    return NextResponse.json({ success: false, message: "Failed to fetch candidates" }, { status: 500 });
   }
 }

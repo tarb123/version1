@@ -18,7 +18,7 @@ const [questions, setQuestions] = useState<QuestionData[]>([]);
   useEffect(() => {
   const fetchQuestions = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/questions');
+      const res = await fetch('/api/questions');
       const data = await res.json();
       if (data.success) {
         setQuestions(data.questions);
@@ -146,7 +146,7 @@ const handleSubmit = async () => {
   
   const userName = localStorage.getItem('userName'); // 🔁 get name stored earlier
 
-  const res = await fetch('http://localhost:5000/api/saveResponses', {
+  const res = await fetch('/api/saveResponses', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
