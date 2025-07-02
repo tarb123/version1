@@ -16,7 +16,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
 };
-
+import { Analytics } from "@vercel/analytics/next"
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +28,7 @@ export default function RootLayout({
         {/* <About/> */}
         <ResponsiveNav/>        
         {children}
+        <Analytics />
         <Footer/>
       </body>
     </html>
