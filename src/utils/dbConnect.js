@@ -1,26 +1,24 @@
 // src/utils/dbConnect.js
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const MONGODB_URI = "mongodb://192.168.18.62:27017/sanjeeda";
+let isConnected = false;
 
-let cached = global.mongoose;
+const dbConnect = async () => {
+  if (isConnected) return;
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+  try {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) throw new Error("❌ MONGODB_URI not set in environment variables");
 
-async function dbConnect() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
-      console.log("✅ MongoDB connected");
-      return mongoose;
+    await mongoose.connect(uri, {
+      dbName: "sanjeeda", // Optional: name of your database
     });
-  }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
+    isConnected = true;
+    console.log("✅ MongoDB connected");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+  }
+};
 
 export default dbConnect;

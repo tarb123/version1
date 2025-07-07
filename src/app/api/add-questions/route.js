@@ -1,6 +1,9 @@
+// src/app/api/add-questions/route.js
+import { NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import mongoose from 'mongoose';
 
+// Schema
 const QuestionSchema = new mongoose.Schema({
   id: String,
   type: String,
@@ -8,7 +11,6 @@ const QuestionSchema = new mongoose.Schema({
   text: String,
   formatWeight: Number,
   traitWeight: Number,
-  sectionWeight: Number,
   reverse: Boolean,
   skills: [String],
   options: [
@@ -18,21 +20,25 @@ const QuestionSchema = new mongoose.Schema({
     },
   ],
 });
+
+// Model
 const Question = mongoose.models.Question || mongoose.model("Question", QuestionSchema);
 
+// POST route handler
 export async function POST(req) {
   await dbConnect();
-  const { questions } = await req.json();
-
-  if (!Array.isArray(questions) || questions.length === 0) {
-    return Response.json({ success: false, message: "❌ No questions provided" }, { status: 400 });
-  }
 
   try {
+    const { questions } = await req.json();
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return NextResponse.json({ success: false, message: "❌ No questions provided" }, { status: 400 });
+    }
+
     await Question.insertMany(questions);
-    return Response.json({ success: true, message: "✅ Questions added" });
+    return NextResponse.json({ success: true, message: "✅ Questions added" });
   } catch (err) {
     console.error("❌ Error adding questions:", err);
-    return Response.json({ success: false, message: "❌ Failed to add" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "❌ Failed to add" }, { status: 500 });
   }
 }
