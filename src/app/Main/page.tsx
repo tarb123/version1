@@ -104,7 +104,12 @@ const [questions, setQuestions] = useState<QuestionData[]>([]);
     }, [calculateMaxSkillScore]
     );
      
-const handleSubmit = async () => {
+  const unansweredQuestionIds = questions
+  .filter((q) => !selectedAnswers[q.id])
+  .map((q) => q.id);
+
+  const handleSubmit = async () => {
+    if (unansweredQuestionIds.length > 0) {alert("Please answer all questions before submitting.");return;}
   
   try {    
   const likertResponses = questions
@@ -517,14 +522,20 @@ return (
           
           <div className="flex flex-col gap-2">
             {questions.map((q, idx) => (
-            <button key={q.id} onClick={() => setCurrentIndex(idx)}
-            className={`text-left px-2 py-2 rounded-md text-xs transition ${ idx === currentIndex
-            ? 'bg-Blue text-white font-semibold'
-            : 'bg-gray3 hover:bg-gray2 text-black font-bold'
-            }`}
-            >
-              <span className="block">{q.text}</span>
-            </button>
+<button
+  key={q.id}
+  onClick={() => setCurrentIndex(idx)}
+  className={`text-left px-2 py-2 rounded-md text-xs transition border-2 ${
+    idx === currentIndex
+      ? 'bg-Blue text-white font-semibold'
+      : !selectedAnswers[q.id]
+      ? 'bg-Red text-white font-semibold'
+      : 'bg-white hover:bg-gray2 text-black font-semibold border-black'
+  }`}
+>
+  <span className="block">{q.text}</span>
+</button>
+
             ))}
           </div>
 
@@ -537,6 +548,9 @@ return (
           <h1 className="text-xl font-bold">خودی</h1>
           <h3 className="text-lg text-center font-bold quiz-subheading">Personality Assessment</h3>
           <label className="text-sm mb-1 block"> Please answer all questions thoughtfully.</label>
+          <div className="text-center text-sm text-gray-600 mb-4">
+            Answered: {Object.keys(selectedAnswers).length} / {questions.length}
+          </div>
 
           <div id="quiz-questions" className="mb-6">
             {questions.map((question, index) =>
@@ -562,16 +576,16 @@ return (
             )}
 
             {currentIndex < questions.length - 1 ? (
-              <button className="bg-blue-500 text-white font-medium py-2 px-4 rounded"
+              <button className="bg-Blue text-white font-medium py-2 px-4 rounded"
                 onClick={goToNext}
                 disabled={!currentQuestion || !selectedAnswers[currentQuestion.id]}
               >
                 Next
               </button>
             ) : (
-              <button className="bg-green-500 text-white font-medium py-2 px-4 rounded"
+              <button className="bg-green text-white font-medium py-2 px-4 rounded"
                 onClick={handleSubmit}
-                disabled={!currentQuestion || !selectedAnswers[currentQuestion.id]}
+                disabled={!currentQuestion || !selectedAnswers[currentQuestion.id] || unansweredQuestionIds.length > 0}
               >
                 View Results
               </button>
