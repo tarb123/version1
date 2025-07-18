@@ -86,20 +86,14 @@ export default function Carousel() {
 // </section>
 
 <section className="relative overflow-hidden bg-white">
-  {/* Background Video */}
   <video
     src="/explore services.mp4"
-    className="absolute top-0 left-0 w-full h-full object-cover z-0"
-    autoPlay
-    muted
-    loop
-    playsInline
+    className="absolute h-full md:h-auto left-0 w-full  object-cover z-0"
+    autoPlay muted loop playsInline
   />
 
-  {/* Overlay Content */}
-  <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10">
-    {/* Heading */}
-    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#AD0217] mb-6 text-center">
+  <div className="relative z-10 flex flex-col items-center justify-center px-4 py-16">
+    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#AD0217] mb-5 text-center">
       Explore Our Services
     </h2>
 
