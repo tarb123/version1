@@ -71,15 +71,8 @@ body {
   margin-top: -55px;
 }
 
-  .question-block {
-    /* margin-bottom: 0px;
-    padding-bottom: 0px; */
-    border-bottom: 1px solid #eee;
-  }
   .question-block:last-of-type {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
+    border-bottom: none;    margin-bottom: 0;
   }
   
   .question-block p {
@@ -92,10 +85,9 @@ body {
   /* Labels for Radio Buttons (FC, SJT) */
   .answer-label {
     display: block;
-         background-color: rgb(46 49 146 / var(--tw-bg-opacity, 1));
+    background-color: rgb(46 49 146 / var(--tw-bg-opacity, 1));
     color: white;
-
-     margin: 5px ;
+    margin: 3px ;
     padding: 5px;
     border-radius: 4px;
     font-size: 15px;
@@ -105,7 +97,8 @@ body {
   }
   
   .answer-label:hover {
-    background-color: whitesmoke;    color: #000;
+    background-color: whitesmoke;    
+    color: #000;
 
    }
   
@@ -435,7 +428,7 @@ body {
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-.navigation-buttons {
+/* .navigation-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -445,4 +438,4 @@ body {
   padding: 10px 20px;
    background: whitesmoke;
   color: black;
-}
+} */

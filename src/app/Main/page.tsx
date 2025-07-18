@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useCallback, useMemo, useEffect} from 'react';
 import QuestionBlock from '../PP/QuestionBlock';
 import type { Answer, QuestionData } from '../PP/QuestionBlock';
@@ -7,6 +8,7 @@ import '../../App.css';
 import { skills as skillList, traitList, skillCategoryMapping, careerDatabase} from '../quizData';
   function App() {
     // const [questions, setQuestions] = useState<any[]>([]); 
+const [showSlider, setShowSlider] = useState(false);
 const [questions, setQuestions] = useState<QuestionData[]>([]);
     const [quizState, setQuizState] = useState('quiz');
     const [finalScores, setFinalScores] = useState<{ [key: string]: number } | null>(null);// Granular skill scores (weighted)
@@ -31,7 +33,6 @@ const [questions, setQuestions] = useState<QuestionData[]>([]);
   };
   fetchQuestions();
 }, []);
-
 
    const handleAnswerChange = useCallback((questionId: string, selectedValue: string | number) => {
     setSelectedAnswers((prev) => ({ ...prev, [questionId]: selectedValue }));
@@ -508,49 +509,101 @@ const [questions, setQuestions] = useState<QuestionData[]>([]);
 //       )}
 //   </div>
 // );
-
 return (
   <>
-  {quizState === 'quiz' && (
-  <div className="flex">
+    <video
+      src="/t1.mp4"
+      className="fixed top-17 left-0 w-full h-full object-cover z-[-1]"
+      autoPlay
+      muted
+      loop
+      playsInline
+    />
+    {quizState === 'quiz' && (
+      <div className="flex flex-col md:flex-row ">
+        {/* ✅ Sidebar for Desktop */}
+        <div className="hidden md:block border border-white backdrop-blur-md shadow-xl rounded-xl fixed top-20 left-3 w-64 h-[70vh] overflow-y-auto p-2 mt-10">
     
-    {/* ✅ Playlist Sidebar */}
-      
-      <div className="fixed top-20 left-3 w-64 h-[75vh] overflow-y-auto bg-white border border-gray rounded-lg shadow-lg p-2 mt-10">
-        
-        <h2 className="text-lg text-[#ff0505] font-nastaleeq font-semibold text-center mb-2 border-b-2 border-black pb-2">خودی</h2>
-          
-          <div className="flex flex-col gap-2">
-            {questions.map((q, idx) => (
-<button
-  key={q.id}
-  onClick={() => setCurrentIndex(idx)}
-  className={`text-left px-2 py-2 rounded-md text-xs transition border-2 ${
-    idx === currentIndex
-      ? 'bg-Blue text-white font-semibold'
-      : !selectedAnswers[q.id]
-      ? 'bg-Red text-white font-semibold'
-      : 'bg-white hover:bg-gray2 text-black font-semibold border-black'
-  }`}
->
-  <span className="block">{q.text}</span>
-</button>
-
-            ))}
+          <div className="mt-2 py-1 backdrop-blur-lg bg-white/80 rounded-xl shadow-md flex justify-between items-center">
+            <button onClick={() => setShowSlider(prev => !prev)}
+              className="transition-transform duration-300 ease-in-out transform text-2xl text-[#081b9c] hover:scale-110">
+              <div className="p-3 py-1 text-left text-sm font-extrabold text-black">
+               Status: {Object.keys(selectedAnswers).length} / {questions.length}
+              </div>
+    
+              <span className={`px-3 py-0 text-left inline-block transition-transform duration-300 text-xl`}>
+                {showSlider ? '🙉' : '🙈'}
+                <span className="text-sm text-black font-bold">{showSlider ? ' Hide' : ' Wanna see'}</span>
+              </span>
+            </button>
           </div>
 
-      </div>
+        {showSlider && (
+        <div className="mt-2 rounded-xl bg-white shadow-xl ring-1 ring-black/10 overflow-hidden">
+          <div className="max-h-80 overflow-y-auto divide-y divide-gray2">
+            {questions.map((q, idx) => (
+              <button
+                key={q.id}
+                onClick={() => setCurrentIndex(idx)}
+                className={`w-full text-left px-4 py-3 text-xs transition duration-200 ${
+                idx === currentIndex
+                ? 'bg-Blue text-white font-semibold'
+                : !selectedAnswers[q.id]
+                ? 'bg-Red text-white font-semibold'
+                : 'hover:bg-gray2 text-black font-semibold'}`}>
+                {idx + 1}. {q.text.length > 50 ? q.text.slice(0, 50) + '...' : q.text}
+              </button>
+             ))}
+          </div>
+        </div>
+        )}
+        </div>
+
+        {/* ✅ Custom Mobile Slider Toggle */}
+        <div className="md:hidden left-10 sticky z-0 py-2 px-2 w-84 h-[42vh] border border-white backdrop-blur-md shadow-xl rounded-xl">
+          <div className="p-3 backdrop-blur-lg bg-white/80 rounded-xl shadow-md flex justify-between items-center">
+            <button onClick={() => setShowSlider(prev => !prev)}
+              className="transition-transform duration-300 ease-in-out transform text-2xl text-[#081b9c] hover:scale-110">
+              <div className="text-left text-sm font-extrabold text-black">
+               Status: {Object.keys(selectedAnswers).length} / {questions.length}
+              </div>
+    
+              <span className={`inline-block transition-transform duration-300 text-xl`}>
+                {showSlider ? '🙉' : '🙈'}
+                <span className="text-sm text-black font-bold">{showSlider ? ' Hide' : ' Wanna see'}</span>
+              </span>
+            </button>
+          </div>
+
+        {showSlider && (
+        <div className="mt-2 rounded-xl bg-white shadow-xl ring-1 ring-black/10 overflow-hidden">
+          <div className="max-h-72 overflow-y-auto divide-y divide-gray2">
+            {questions.map((q, idx) => (
+              <button
+                key={q.id}
+                onClick={() => setCurrentIndex(idx)}
+                className={`w-full text-left px-4 py-3 text-sm transition duration-200 ${
+                idx === currentIndex
+                ? 'bg-Blue text-white font-semibold'
+                : !selectedAnswers[q.id]
+                ? 'bg-Red text-white font-semibold'
+                : 'hover:bg-gray2 text-black'}`}>
+                {idx + 1}. {q.text.length > 50 ? q.text.slice(0, 50) + '...' : q.text}
+              </button>
+             ))}
+          </div>
+        </div>
+        )}
+
+    </div>
 
         {/* ✅ Quiz Container */}
-        <div id="quiz-container" 
-        className="ml-72 mx-auto mt-20 mb-20 w-full max-w-3xl rounded-lg shadow-md px-10 py-14 bg-white"
+        <div
+          id="quiz-container"
+          className="mx-auto mt-20 mb-40 md:ml-72 w-full md:w-[50%] max-w-3xl rounded-lg shadow-md px-4 sm:px-5 py-5 bg-white"
         >
           <h1 className="text-xl font-bold">خودی</h1>
           <h3 className="text-lg text-center font-bold quiz-subheading">Personality Assessment</h3>
-          <label className="text-sm mb-1 block"> Please answer all questions thoughtfully.</label>
-          <div className="text-center text-sm text-gray-600 mb-4">
-            Answered: {Object.keys(selectedAnswers).length} / {questions.length}
-          </div>
 
           <div id="quiz-questions" className="mb-6">
             {questions.map((question, index) =>
@@ -566,9 +619,10 @@ return (
             )}
           </div>
 
-          <div className="navigation-buttons flex justify-between">
+          <div className="navigation-buttons flex justify-between mt-4">
             {currentIndex > 0 && (
-              <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded"
+              <button
+                className="bg-gradient-to-t from-gray via-Red to-Red text-white font-medium py-2 px-4 rounded"
                 onClick={goToPrevious}
               >
                 Previous
@@ -576,16 +630,22 @@ return (
             )}
 
             {currentIndex < questions.length - 1 ? (
-              <button className="bg-Blue text-white font-medium py-2 px-4 rounded"
+              <button
+                className="bg-gradient-to-t from-gray via-Red to-Red text-white font-medium py-2 px-4 rounded"
                 onClick={goToNext}
                 disabled={!currentQuestion || !selectedAnswers[currentQuestion.id]}
               >
                 Next
               </button>
             ) : (
-              <button className="bg-green text-white font-medium py-2 px-4 rounded"
+              <button
+                className="bg-green text-white font-medium py-2 px-4 rounded"
                 onClick={handleSubmit}
-                disabled={!currentQuestion || !selectedAnswers[currentQuestion.id] || unansweredQuestionIds.length > 0}
+                disabled={
+                  !currentQuestion ||
+                  !selectedAnswers[currentQuestion.id] ||
+                  unansweredQuestionIds.length > 0
+                }
               >
                 View Results
               </button>
@@ -608,5 +668,7 @@ return (
         />
       )}
   </>
-);};
+);
+
+  };
 export default App;

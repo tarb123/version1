@@ -49,7 +49,7 @@ function QuestionBlock({
         return (
           <div className="likert-scale">
             <span>Strongly Disagree</span>
- {questionData.options?.map((option) => (
+          {questionData.options?.map((option) => (
             <label key={option.value} className="likert-label">
               <input
                 type="radio"
@@ -93,8 +93,8 @@ function QuestionBlock({
   };
 
   return (
-    <div className="question-block">
-      <p><strong>{questionIndex + 1}. {text}</strong></p>
+    <div>
+      <h6 className='text-sm font-semibold mb-1'>{questionIndex + 1}. {text}</h6>
       {renderAnswers()}
     </div>
   );
