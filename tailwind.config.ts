@@ -13,6 +13,7 @@ content: ['./public/**/*.html', "./src/**/*.{js,ts,jsx,tsx}"],
     },
     colors: {
       customBlue: '#00838F',
+      whitesmoke: '#f5f5f5',
       darkBlue: '#060b2d',
       TealBlue: '#004D60',
       Red: '#C00000',

@@ -524,7 +524,7 @@ return (
         {/* ✅ Sidebar for Desktop */}
         <div className="hidden md:block border border-white backdrop-blur-md shadow-xl rounded-xl fixed top-20 left-3 w-64 h-[70vh] overflow-y-auto p-2 mt-10">
     
-          <div className="mt-2 py-1 backdrop-blur-lg bg-white/80 rounded-xl shadow-md flex justify-between items-center">
+          <div className="mt-2 py-1 backdrop-blur-lg rounded-xl shadow-md flex justify-between items-center">
             <button onClick={() => setShowSlider(prev => !prev)}
               className="transition-transform duration-300 ease-in-out transform text-2xl text-[#081b9c] hover:scale-110">
               <div className="p-3 py-1 text-left text-sm font-extrabold text-black">
@@ -547,10 +547,10 @@ return (
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-full text-left px-4 py-3 text-xs transition duration-200 ${
                 idx === currentIndex
-                ? 'bg-Blue text-white font-semibold'
+                ? 'bg-white text-black font-semibold'
                 : !selectedAnswers[q.id]
-                ? 'bg-Red text-white font-semibold'
-                : 'hover:bg-gray2 text-black font-semibold'}`}>
+                ? 'bg-white text-Red font-semibold'
+                : 'hover:bg-gray2 text-Blue font-semibold'}`}>
                 {idx + 1}. {q.text.length > 50 ? q.text.slice(0, 50) + '...' : q.text}
               </button>
              ))}

@@ -8,7 +8,9 @@ const Header = () => {
   return (
     <>
       {/* DESKTOP HEADER */}
-      <header className="hidden md:flex flex-col fixed w-full bg-[#dcdce8] z-50 ">
+      <header className="hidden md:flex flex-col fixed w-full bg-white z-50 ">
+      {/* <header className="hidden md:flex flex-col fixed w-full z-50 "> */}
+
         <div className="flex items-baseline justify-start px-6 py-2 mb-[-10px]">
           <h1 className="text-[30px] font-bold text-[#e63946] font-quicksand">
             Sanjeed<span className="text-[#081b9c]">a!</span>

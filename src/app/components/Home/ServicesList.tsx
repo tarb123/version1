@@ -47,49 +47,102 @@ const cards = [
 
 export default function Carousel() {
   return (
-    // <div className="w-full px-10 py-10  h-screen mt-14">
-    //   <h2 className="text-3xl font-bold text-center text-Red mb-8">Explore Our Services</h2>
-  <section className="services-section  relative overflow-hidden pt-[56.25%]">
-         
-    <video src="/t1.mp4" className="absolute top-px left-0 w-auto h-max object-cover z-0" autoPlay muted loop playsInline/>
+    // <div className="w-full px-10 py-10  h-screen mt-14"> <h2 className="text-3xl font-bold text-center text-Red mb-8">Explore Our Services</h2>
+//   <section className="services-section  relative overflow-hidden pt-[43%]">
+//     {/* <video src="/ES.mp4" className="absolute top-px left-0 w-auto h-max object-cover z-0" autoPlay muted loop playsInline/> */}
+//     <video src="/explore services.mp4" className="absolute top-px left-0 w-auto h-max object-cover z-0" 
+//     autoPlay muted loop playsInline/>
     
-    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center z-10 px-4">
+//     <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center z-10 px-4">
    
-    {/* Heading */}
-    <h2 className="text-3xl py-4 font-bold text-[#AD0217] mt-5 
-    md:text-sm 
-    lg:text-4xl 
-    xl:text-4xl 
-    sm:text-xs">
-    Explore Our Services</h2>
+//     {/* Heading */}
+//     <h2 className="text-3xl py-4 font-bold text-[#AD0217] mt-5 
+//     md:text-sm lg:text-4xl xl:text-4xl sm:text-xs">Explore Our Services</h2>
     
-    <Swiper 
-    effect="coverflow" grabCursor={true} centeredSlides={true} slidesPerView="auto" loop={true}
-    autoplay={{ delay: 3000, disableOnInteraction: false,}}
-    coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5,}}
-    pagination={{ clickable: true }}
-    modules={[EffectCoverflow, Pagination, Autoplay]}
-    className="w-full max-w-6xl mx-auto"
+//     <Swiper effect="coverflow" grabCursor={true} centeredSlides={true} slidesPerView="auto" 
+//     loop={true} autoplay={{ delay: 3000, disableOnInteraction: false,}} 
+//     coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5,}} 
+//     pagination={{ clickable: true }} modules={[EffectCoverflow, Pagination, Autoplay]} 
+//     className="w-full max-w-6xl mx-auto">
+      
+//       {cards.map((card, index) => (
+        
+//         <SwiperSlide key={index} className="bg-white rounded-xl overflow-hidden shadow-lg max-w-xs">
+          
+//           <Image className="w-12 h-12 sm:w-4 sm:h-4 md:w-48 md:h-48 lg:w-52 lg:h-52 mx-auto mt-10"
+//           src={card.cover} width={100} height={100} alt={card.ServicesName} />
+          
+//           <div className="p-4 text-center ">
+//             {/* Optionally display the description or ServicesName */}
+//             <h2 className="mt-2 text-lg font-semibold text-Red">{card.ServicesName}</h2>
+//             <p className="text-sm text-darkBlue">{card.desc}</p>
+//           </div>
+          
+//         </SwiperSlide>
+//         ))}
+
+//   </Swiper>
+// </div>
+// </section>
+
+<section className="relative overflow-hidden bg-white">
+  {/* Background Video */}
+  <video
+    src="/explore services.mp4"
+    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
+
+  {/* Overlay Content */}
+  <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10">
+    {/* Heading */}
+    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#AD0217] mb-6 text-center">
+      Explore Our Services
+    </h2>
+
+    {/* Swiper */}
+    <Swiper
+      effect="coverflow"
+      grabCursor={true}
+      centeredSlides={true}
+      slidesPerView="auto"
+      loop={true}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5 }}
+      pagination={{ clickable: true }}
+      modules={[EffectCoverflow, Pagination, Autoplay]}
+      className="w-full max-w-6xl"
     >
       {cards.map((card, index) => (
-        <SwiperSlide key={index} className="bg-white rounded-xl overflow-hidden shadow-lg max-w-xs">
-          
-          <Image className="w-12 h-12 sm:w-4 sm:h-4 md:w-48 md:h-48 lg:w-52 lg:h-52 mx-auto mt-10"
-          src={card.cover} width={100} height={100} alt={card.ServicesName} />
-          
-          <div className="p-4 text-center ">
-            
-            {/* Optionally display the description or ServicesName */}
-            <h2 className="mt-2 text-lg font-semibold text-Red">{card.ServicesName}</h2>
-            <p className="text-sm text-darkBlue">{card.desc}</p>
-            
-          </div>
-          
-        </SwiperSlide>
-        ))}
+        <SwiperSlide
+          key={index}
+          className="bg-white rounded-xl overflow-hidden shadow-lg max-w-xs sm:max-w-sm p-4"
+        >
+          {/* Image */}
+          <Image
+            className="w-full h-40 sm:h-48 md:h-52 lg:h-56 object-contain mx-auto"
+            src={card.cover}
+            width={300}
+            height={300}
+            alt={card.ServicesName}
+          />
 
-  </Swiper>
-</div>
+          {/* Text */}
+          <div className="mt-4 text-center">
+            <h3 className="text-base sm:text-lg font-semibold text-[#AD0217]">
+              {card.ServicesName}
+            </h3>
+            <p className="text-sm sm:text-base text-[#081b9c] mt-1">
+              {card.desc}
+            </p>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
 </section>
 
 );}
