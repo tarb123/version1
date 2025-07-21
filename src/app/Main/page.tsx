@@ -584,10 +584,10 @@ return (
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-full text-left px-4 py-3 text-sm transition duration-200 ${
                 idx === currentIndex
-                ? 'bg-Blue text-white font-semibold'
+                ? 'bg-white text-black font-semibold'
                 : !selectedAnswers[q.id]
-                ? 'bg-Red text-white font-semibold'
-                : 'hover:bg-gray2 text-black'}`}>
+                ? 'bg-white text-Red font-semibold'
+                : 'hover:bg-gray2 text-Blue font-semibold'}`}>
                 {idx + 1}. {q.text.length > 50 ? q.text.slice(0, 50) + '...' : q.text}
               </button>
              ))}
