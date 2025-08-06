@@ -13,7 +13,9 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
   skills: [String],
   options: [{ label: String, value: Number }],
   answers: [{
-    id: String, optionKey: String, text: String,
+    id: String, 
+    optionKey: String, 
+    text: String,
     scores: mongoose.Schema.Types.Mixed,
     baseScoreValue: Number,
   }],

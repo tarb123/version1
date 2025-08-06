@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react'
 import Link from "next/link";
-import ServicesList from './ServicesList';
+import ServicesList from './ServicesList';import Awrapper from '@/app/aboutus/Awrapper';
 
 const Home = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -142,6 +142,7 @@ const Home = () => {
       </div>
     </div>
   </section>
+      <Awrapper/>
 
   </div>
   
