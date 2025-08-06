@@ -98,14 +98,7 @@ const Header = () => {
             <span className="font-sans serif font-semibold">Personality Assessment</span>
             <span className="absolute bottom-0 left-0 w-0 h-[3px] bg-Red transition-all duration-300 group-hover:w-full"></span>
           </Link>
-          <div
-          className="absolute -mr-20 right-20 text-white bg-Blue px-1 py-3 -mt-1 lg:-mt-3 hover:bg-[#0620cc] xs:px-4 xs:py-3 xs:right-3"
-          
-          >
-            <a href="/logo" className="text-white px-3 py-3 rounded-md">
-              Log In
-            </a>
-          </div>
+
         
         </nav>
       </header>
