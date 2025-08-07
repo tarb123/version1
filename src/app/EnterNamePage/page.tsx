@@ -1,12 +1,11 @@
 'use client';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Main } from 'next/document';
-import QuestionBlock from '../PP/QuestionBlock';
-import ResultsPage from '../PP/ResultsPage';
-import SpiderChart from '../PP/SpiderChart';
+// import { Main } from 'next/document';
+// import QuestionBlock from '../PP/QuestionBlock';
+// import ResultsPage from '../PP/ResultsPage';
+// import SpiderChart from '../PP/SpiderChart';
 
 const EnterNamePage: React.FC = () => {
   const [name, setName] = useState('');

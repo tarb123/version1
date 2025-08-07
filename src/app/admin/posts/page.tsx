@@ -96,17 +96,16 @@ else if (selectedType === "forced") {
   }
 };
 
-const handleOptionChange = (index: number, key: 'label' | 'value', value: string | number) => {
-  const updatedOptions = [...question.options];
-  // updatedOptions[index][key] = key === 'value' ? Number(value) : value;
-  setQuestion({ ...question, options: updatedOptions });
-};
+// const handleOptionChange = (index: number, key: 'label' | 'value', value: string | number) => {
+//   const updatedOptions = [...question.options];
+//   // updatedOptions[index][key] = key === 'value' ? Number(value) : value;
+//   setQuestion({ ...question, options: updatedOptions });
+// };
+  // const addOption = () => {
+  //   setQuestion({ ...question, options: [...question.options, { label: '', value: 0 }] });
+  // };
 
-  const addOption = () => {
-    setQuestion({ ...question, options: [...question.options, { label: '', value: 0 }] });
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const payload = {
       ...question,
@@ -153,102 +152,44 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
       <form onSubmit={handleSubmit} className="bg-white grid rounded px-3 py-5 gap-4 max-w-2xl mb-10">
       
       <div className="relative w-full">
-      <input type="text" id="id" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-      required value={question.id} onChange={e => setQuestion({ ...question, id: e.target.value })}/>
-      
+      <input type="text" id="id" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" required value={question.id} onChange={e => setQuestion({ ...question, id: e.target.value })}/>
       <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">ID</label>
      </div>
        
 <div className="relative w-full">
-  <input type="text" id="text"
-    className="peer px-3 pt-5 pb-1 w-[450px] border-2 border-customBlue rounded  
-    text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-    required value={question.text} onChange={e => setQuestion({ ...question, text: e.target.value })}/>
-  <label htmlFor="text"
-  className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-  >
-    Text
-  </label>
+  <input type="text" id="text" className="peer px-3 pt-5 pb-1 w-[450px] border-2 border-customBlue rounded text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" required value={question.text} onChange={e => setQuestion({ ...question, text: e.target.value })}/>
+  <label htmlFor="text" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs">Text</label>
 </div>  
 
 <div className="relative w-full">
-  <input type="text" id="primaryTrait"
-    className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-     required value={question.primaryTrait} onChange={e => setQuestion({ ...question, primaryTrait: e.target.value })}
-  />
-  <label
-    htmlFor="primaryTrait"
-    className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-  >
-    Primary Trait
-  </label>
+  <input type="text" id="primaryTrait" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" required value={question.primaryTrait} onChange={e => setQuestion({ ...question, primaryTrait: e.target.value })}/>
+  <label htmlFor="primaryTrait" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs">Primary Trait</label>
 </div>
 <div className="relative w-full">
-  <input
-    type="number"
-    id="formatWeight"
-    className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-     required
-    value={question.formatWeight}
-    onChange={e => setQuestion({ ...question, formatWeight: +e.target.value })}
-  />
-  <label
-    htmlFor="formatWeight"
-    className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-  >
-    Format Weight
-  </label>
+  <input type="number" id="formatWeight" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" required value={question.formatWeight} onChange={e => setQuestion({ ...question, formatWeight: +e.target.value })}/>
+  <label htmlFor="formatWeight" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"> Format Weight</label>
 </div>
 <div className="relative w-full">
-  <input
-    type="number"
-    id="traitWeight"
-    className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-    placeholder="Trait Weight"
-    required
-    value={question.traitWeight}
-    onChange={e => setQuestion({ ...question, traitWeight: +e.target.value })}
-  />
-  <label
-    htmlFor="traitWeight"
-    className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-  >
-    Trait Weight
-  </label>
+  <input type="number" id="traitWeight" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" placeholder="Trait Weight" required value={question.traitWeight} onChange={e => setQuestion({ ...question, traitWeight: +e.target.value })}/>
+  <label htmlFor="traitWeight" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs">Trait Weight</label>
 </div>  
 
 <div className="relative w-full">
-  <input
-    type="text"
-    id="skills"
-    className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue"
-    value={question.skills}
-    onChange={e => setQuestion({ ...question, skills: e.target.value })}
-  />
-  <label
-    htmlFor="skills"
-    className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-  >
-    Skills (comma-separated)
-  </label>
+  <input type="text" id="skills" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-bold placeholder-transparent focus:outline-none focus:ring-customBlue" value={question.skills} onChange={e => setQuestion({ ...question, skills: e.target.value })}/>
+  <label htmlFor="skills" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"> Skills (comma-separated)</label>
 </div>  
 
 <div className="relative w-full">
   
   {/* Select Type */}
-  <select value={question.type} onChange={handleTypeChange} required
-  className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs text-black focus:outline-none focus:ring-customBlue">
+  <select value={question.type} onChange={handleTypeChange} required className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs text-black focus:outline-none focus:ring-customBlue">
     <option value="">Select Type</option>
     <option value="likert">Likert</option>
     <option value="forced">Forced</option>
     <option value="sjt">SJT</option>
   </select>
 
-  <label htmlFor="type"
-    className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-focus:top-1 peer-focus:text-xs"
-  >
-    Type
-  </label>
+  <label htmlFor="type" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-focus:top-1 peer-focus:text-xs">Type</label>
 </div>
 
 {question.type === "forced" && question.answers.length === 2 && (
@@ -262,52 +203,34 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
         <h3 className="text-sm font-bold text-customBlue">Option {key}</h3>
 
           <div className="relative w-full">
-            <input type="text" id="id" required 
-            className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
-            value={question.answers[index].id} 
+            <input type="text" id="id" required className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={question.answers[index].id} 
             onChange={(e) => {
               const updated = [...question.answers];
               updated[index].id = e.target.value;
               setQuestion({ ...question, answers: updated });
             }}            
             />
-            <label htmlFor="id" 
-            className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-            ID
-            </label>
+            <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">ID</label>
           </div>
 
         <div className="relative w-full">
-          <input type="text" 
-            className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
-            value={question.answers[index].optionKey} readOnly           
-          />
-      
-          <label htmlFor="id" 
-            className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-            Option Key (readonly)
-          </label>
+          <input type="text" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={question.answers[index].optionKey} readOnly/>
+          <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">Option Key (readonly)</label>
         </div>
 
         <div className="relative w-full">
-          <input type="text" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
-            value={question.answers[index].text}
+          <input type="text" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={question.answers[index].text}
             onChange={(e) => {
               const updated = [...question.answers];
               updated[index].text = e.target.value;
               setQuestion({ ...question, answers: updated });
             }}            />
       
-          <label htmlFor="id" 
-            className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-            TEXT
-          </label>
+          <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">TEXT</label>
         </div>
 
         <div className="relative w-full">
-          <input type="text" 
-          className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
-          value={question.answers[index].baseScoreValue}
+          <input type="text" className="peer w-[450px] border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={question.answers[index].baseScoreValue}
           onChange={(e) => {
           const updated = [...question.answers];
           updated[index].baseScoreValue = Number(e.target.value);
@@ -315,10 +238,7 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
           }}            
           />
       
-          <label htmlFor="id" 
-          className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-            Base Score Value
-          </label>
+          <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue"> Base Score Value</label>
         </div>
 
   {/* Scores input: key-value editing */}
@@ -329,14 +249,8 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
     {Object.entries(question.answers[index].scores || {}).map(([skill, value]) => (
     <div key={skill} className="flex items-center space-x-2">
           
-      <input type="text"
-        className="peer w-52 h-9 border-2 border-customBlue rounded px-2 pt-5 pb-3 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"            value={skill}
-        readOnly
-      />
-      
-      <input type="number"
-      className="peer w-52 h-9 border-2 border-customBlue rounded px-2 pt-5 pb-3 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
-      value={value as number}
+      <input type="text" className="peer w-52 h-9 border-2 border-customBlue rounded px-2 pt-5 pb-3 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={skill}readOnly/>
+      <input type="number" className="peer w-52 h-9 border-2 border-customBlue rounded px-2 pt-5 pb-3 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue" value={value as number}
         onChange={(e) => {
         const updated = [...question.answers];
         updated[index].scores[skill] = Number(e.target.value);
@@ -344,8 +258,7 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
           }}
       />
       
-      <button type="button" className="text-Red font-extrabold text-base"
-        onClick={() => {
+      <button type="button" className="text-Red font-extrabold text-base" onClick={() => {
         const updated = [...question.answers];
         delete updated[index].scores[skill];
           setQuestion({ ...question, answers: updated });
@@ -359,13 +272,9 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
       {/* Add new skill-score pair */}
       <div className="relative w-full gap-3 flex mt-2">
       
-        <label htmlFor="id" 
-        className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-        New Skill
-        </label>
+        <label htmlFor="id" className="absolute left-3 top-1 text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">New Skill</label>
 
-        <input type="text"
-         className="peer w-52 border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
+        <input type="text" className="peer w-52 border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
           // className="w-1/2 border px-2 py-1 text-xs rounded" placeholder="New Skill"
          value={question.answers[index].newSkill || ""}
          onChange={(e) => {
@@ -375,13 +284,9 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
           }}
         />
 
-        <label htmlFor="id" 
-          className="absolute right-80 py-2 px-[-3px] top-[-2px] text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">
-        Value
-        </label>
+        <label htmlFor="id" className="absolute right-80 py-2 px-[-3px] top-[-2px] text-sm text-customBlue font-bold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-customBlue peer-focus:top-1 peer-focus:text-xs peer-focus:text-customBlue">Value</label>
             
-        <input type="number"
-          className="peer w-52 gap-0 border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
+        <input type="number" className="peer w-52 gap-0 border-2 border-customBlue rounded px-3 pt-5 pb-1 text-xs font-medium placeholder-transparent focus:outline-none focus:ring-customBlue"
           // className="w-1/4 border px-2 py-1 text-xs rounded" placeholder="Value"
           value={question.answers[index].newValue || ""}
           onChange={(e) => {
@@ -391,8 +296,7 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
           }}
         />
 
-      <button type="button"
-        className="mt-1 w-8 h-8 flex items-center justify-center bg-Blue hover:bg-Red text-white rounded-full shadow transition"
+      <button type="button" className="mt-1 w-8 h-8 flex items-center justify-center bg-Blue hover:bg-Red text-white rounded-full shadow transition"
         onClick={() => {
         const updated = [...question.answers];
         const skill = updated[index].newSkill?.trim();
@@ -435,9 +339,7 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
   <label className="flex items-center gap-2">
   <input type="checkbox" checked={question.reverse} onChange={e => setQuestion({ ...question, reverse: e.target.checked })} />Reverse
   </label>
-        <button type="submit" className="bg-green text-white py-2 px-4 rounded hover:bg-darkgreen">
-          Submit
-        </button>
+        <button type="submit" className="bg-green text-white py-2 px-4 rounded hover:bg-darkgreen"> Submit</button>
       </form>
 
       <h2 className="text-xl font-bold mb-2">📋 All Questions</h2>
@@ -454,15 +356,19 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
             </tr>
           </thead>
           <tbody>
-            {allQuestions.map((q: any, i) => (
-              <tr key={i} className="border-b hover:bg-gray-100">
-                <td className="px-3 py-2">{q.id}</td>
-                <td className="px-3 py-2">{q.text}</td>
-                <td className="px-3 py-2">{q.type}</td>
-                <td className="px-3 py-2">{q.primaryTrait}</td>
-                <td className="px-3 py-2">{q.skills?.join(', ')}</td>
-              </tr>
-            ))}
+{allQuestions.map((q: Question, i) => (
+  <tr key={i} className="border-b hover:bg-gray-100">
+    <td className="px-3 py-2">{q.id}</td>
+    <td className="px-3 py-2">{q.text}</td>
+    <td className="px-3 py-2">{q.type}</td>
+    <td className="px-3 py-2">{q.primaryTrait}</td>
+    <td className="px-3 py-2">
+      {/* If skills is CSV string like "Skill1, Skill2" */}
+      {q.skills}
+    </td>
+  </tr>
+))}
+
           </tbody>
         </table>
       </div>
@@ -476,5 +382,4 @@ const handleOptionChange = (index: number, key: 'label' | 'value', value: string
         }
       `}</style>
     </div>
-  );
-}
+  );}
