@@ -8,7 +8,9 @@
     "dev:frontend": "next dev",
     "dev:backend": "node server.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "next build"
+
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.0.0",
