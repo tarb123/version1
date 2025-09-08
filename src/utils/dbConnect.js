@@ -15,9 +15,11 @@ const dbConnect = async () => {
     });
 
     isConnected = true;
-    console.log("✅ MongoDB connected");
+    console.log("🅼🅾🅽🅶🅾🅳🅱 ✅ 🅳🅰🆃🅰🅱🅰🆂✅ Connected!");
+
   } catch (err) {
-    console.error("❌ MongoDB connection error:", err);
+    console.error("🅼🅾🅽🅶🅾🅳🅱 ❌ Connection error:", err);
+
   }
 };
 
