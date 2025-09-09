@@ -15,3 +15,4 @@ export const db = mysql.createPool({
   database: process.env.DB_NAME || "user_management",
   port: Number(process.env.DB_PORT) || 3306,
 });
+
