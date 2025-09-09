@@ -11,60 +11,63 @@ const Login: React.FC = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
+  // ✅ Use env variable for API
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   type AuthResponse = {
-    token: string; message?: string;
+    token: string;
+    message?: string;
   };
-  
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try 
-    {
-      const response = await axios.post<AuthResponse>
-      (
-        "http://192.168.18.62:5000/login", formData
+    try {
+      const response = await axios.post<AuthResponse>(
+        `${API_URL}/login`,
+        formData
       );
-     
-      if (response.data.token) 
-      {
+
+      if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
-        setMessage("Login successful!");  router.push("/Main");
-      }  
-    } 
-
-
-    catch (error: unknown) {
-  if (error instanceof Error) {
-    setMessage(error.message);
-  } else {
-    setMessage("Login failed");
-  }
-}
-  };
-
-  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
-    if (!credentialResponse.credential) 
-    { setMessage("Google Signup failed: No credential received."); return; }
-
-    try 
-    {
-      const response = await axios.post<{ token?: string }>
-      ( "http://192.168.18.62:5000/google-auth", { token: credentialResponse.credential } );
-
-      if (response.data.token) 
-      {
-        localStorage.setItem("authToken", response.data.token);
-        setMessage("Google Signup successful! Redirecting..."); // router.push("/FinancialOffer");
+        setMessage("Login successful!");
+        router.push("/Main");
       }
-    } 
-    
-    catch 
-    { setMessage("Google Signup failed"); }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage("Login failed");
+      }
+    }
   };
 
+  const handleGoogleSuccess = async (
+    credentialResponse: CredentialResponse
+  ) => {
+    if (!credentialResponse.credential) {
+      setMessage("Google Signup failed: No credential received.");
+      return;
+    }
+
+    try {
+      const response = await axios.post<{ token?: string }>(
+        `${API_URL}/google-auth`,
+        { token: credentialResponse.credential }
+      );
+
+      if (response.data.token) {
+        localStorage.setItem("authToken", response.data.token);
+        setMessage("Google Signup successful! Redirecting...");
+        // router.push("/FinancialOffer");
+      }
+    } catch {
+      setMessage("Google Signup failed");
+    }
+  };
 return (
   <form  className="w-full max-w-md min-w-[320px] mx-auto my-12 bg-white p-8 rounded-lg shadow-md space-y-4"
     onSubmit={handleSubmit}>
