@@ -3,7 +3,8 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import GoogleLoginButton from "../GoogleLogin/page";
+import GoogleLoginButton from "../components/GoogleLoginButton";
+import { CredentialResponse } from "@react-oauth/google";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ name: "", password: "" });
@@ -33,13 +34,18 @@ const Login: React.FC = () => {
         setMessage("Login successful!");  router.push("/Main");
       }  
     } 
-    catch (error: any) 
-    {
-      setMessage(error.response?.data?.message || "Login failed");
-    }
+
+
+    catch (error: unknown) {
+  if (error instanceof Error) {
+    setMessage(error.message);
+  } else {
+    setMessage("Login failed");
+  }
+}
   };
 
-  const handleGoogleSuccess = async (credentialResponse: any) => {
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     if (!credentialResponse.credential) 
     { setMessage("Google Signup failed: No credential received."); return; }
 
@@ -102,7 +108,7 @@ return (
     <hr className="w-1/4 border-gray" />
   </div>
 
-    <h6 className="text-xs font-sans serif">Don't have an account yet?</h6>
+  <h6 className="text-xs font-sans serif">Don&apos;t have an account yet?</h6>
   <Link href="/signup" className="block text-sm font-sans serif text-Red hover:text-Blue font-bold">
     Signup
   </Link>

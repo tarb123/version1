@@ -1,22 +1,21 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Image from 'next/image';
+ "use client";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
-const EnterNamePage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [oldEmail, setOldEmail] = useState('');
+const EnterNamePageInner: React.FC = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [oldEmail, setOldEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isEditMode = searchParams.get('mode') === 'edit';
+  const isEditMode = searchParams.get("mode") === "edit";
 
-  // 🔹 If Edit mode, preload candidate from localStorage
   useEffect(() => {
     if (isEditMode) {
-      const stored = localStorage.getItem('candidate');
+      const stored = localStorage.getItem("candidate");
       if (stored) {
         const { name, email } = JSON.parse(stored);
         setName(name);
@@ -31,21 +30,21 @@ const EnterNamePage: React.FC = () => {
 
     try {
       if (oldEmail) {
-        // ✅ Update flow
-        const res = await fetch('/api/candidates', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+        const res = await fetch("/api/candidates", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ oldEmail, name, email }),
         });
         const data = await res.json();
         if (data.success) {
-          router.push('/Main');
+          router.push("/Main");
           return;
         }
       }
 
-      // ✅ New user flow
-      const res = await fetch(`/api/candidates?email=${encodeURIComponent(email)}`);
+      const res = await fetch(
+        `/api/candidates?email=${encodeURIComponent(email)}`
+      );
       const data = await res.json();
 
       if (data.exists) {
@@ -53,29 +52,26 @@ const EnterNamePage: React.FC = () => {
         setEmail(data.candidate.email);
         setOldEmail(data.candidate.email);
         setSubmitted(true);
-
-        // Save for reuse
-        localStorage.setItem('candidate', JSON.stringify(data.candidate));
+        localStorage.setItem("candidate", JSON.stringify(data.candidate));
       } else {
-        await fetch('/api/candidates', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        await fetch("/api/candidates", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email }),
         });
-        router.push('/Main');
+        router.push("/Main");
       }
     } catch (err) {
-      console.error('Error submitting candidate:', err);
+      console.error("Error submitting candidate:", err);
     }
   };
 
   const handleUseSameDetails = () => {
-    router.push('/Main');
+    router.push("/Main");
   };
 
   const handleEdit = () => {
-    // 🔹 Go back to the same form in edit mode
-    router.push('/EnterNamePage?mode=edit');
+    router.push("/EnterNamePage?mode=edit");
   };
 
   return (
@@ -84,13 +80,19 @@ const EnterNamePage: React.FC = () => {
         <div className="bg-white backdrop-blur-md shadow-xl rounded-xl p-4 sm:p-6 md:p-10 w-full max-w-xs sm:max-w-sm md:max-w-md">
           {!submitted || isEditMode ? (
             <>
-              {/* 🖼 Logo + Heading */}
               <div className="flex flex-col sm:flex-row items-center sm:items-start sm:gap-4 gap-2 mb-6 text-center sm:text-left">
-                <Image src="/courses/cc1.png" alt="Logo" width={60} height={30} className="h-10 w-auto object-contain" />
-                <h1 className="font-sans serif font-semibold text-Blue text-4xl">| Lets Start</h1>
+                <Image
+                  src="/courses/cc1.png"
+                  alt="Logo"
+                  width={60}
+                  height={30}
+                  className="h-10 w-auto object-contain"
+                />
+                <h1 className="font-sans serif font-semibold text-Blue text-4xl">
+                  | Lets Start
+                </h1>
               </div>
 
-              {/* Input fields */}
               <div className="relative w-full">
                 <input
                   type="text"
@@ -99,7 +101,9 @@ const EnterNamePage: React.FC = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                <label className="absolute left-3 top-1 text-sm text-customBlue font-bold">Name</label>
+                <label className="absolute left-3 top-1 text-sm text-customBlue font-bold">
+                  Name
+                </label>
               </div>
 
               <div className="relative w-full">
@@ -110,7 +114,9 @@ const EnterNamePage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <label className="absolute left-3 top-1 text-sm text-customBlue font-bold">Email</label>
+                <label className="absolute left-3 top-1 text-sm text-customBlue font-bold">
+                  Email
+                </label>
               </div>
 
               <button
@@ -128,27 +134,35 @@ const EnterNamePage: React.FC = () => {
               <p className="mb-16 text-sm font-sans serif">
                 Wanna continue with previous name, email or edit!
               </p>
-              
+
               <div className="flex gap-20">
-                
-                <button className="flex-1 bg-whitesmoke border-2 text-black text-xs font-semibold py-2"
+                <button
+                  className="flex-1 bg-whitesmoke border-2 text-black text-xs font-semibold py-2"
                   onClick={handleUseSameDetails}
                 >
                   Use Previous Details
                 </button>
 
-                <button className="flex-1 bg-whitesmoke border-2 text-black text-xs font-semibold py-2"
+                <button
+                  className="flex-1 bg-whitesmoke border-2 text-black text-xs font-semibold py-2"
                   onClick={handleEdit}
                 >
                   Edit & Continue
                 </button>
-                
               </div>
             </>
           )}
         </div>
       </div>
     </section>
+  );
+};
+
+const EnterNamePage: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EnterNamePageInner />
+    </Suspense>
   );
 };
 

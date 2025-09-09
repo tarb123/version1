@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { CredentialResponse } from "@react-oauth/google";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import GoogleLoginButton from "../GoogleLogin/page";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [message, setMessage] = useState("");
@@ -34,12 +35,17 @@ const Signup: React.FC = () => {
       }
     } 
     
-    catch (error: any) {
-      setMessage(error.response?.data?.message || "Signup failed");
-    }
+catch (error: unknown) {
+  if (error instanceof Error) {
+    setMessage(error.message);
+  } else {
+    setMessage("Signup failed");
+  }
+}
+
   };
   
-  const handleGoogleSuccess = async (credentialResponse: any) => {
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     if (!credentialResponse.credential) {
       setMessage("Google Signup failed: No credential received.");
       return;

@@ -21,8 +21,11 @@ function ForgotPassword() {
       { toast.error(data.message || "User not found."); }
     } 
 
-    catch (error) 
-    {toast.error("Something went wrong. Please try again later.");} 
+catch (error) {
+  console.error("Forgot password error:", error);
+  toast.error("Something went wrong. Please try again later.");
+}
+
     finally {setLoading(false);}
 };
 

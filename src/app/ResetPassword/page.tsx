@@ -34,10 +34,11 @@ export default function VerifyCode() {
         toast.error(data.message || "Invalid code or email.");
       }
     } 
-    catch (error) {
-      // Handle any unforeseen errors
-      toast.error("Something went wrong. Please try again later.");
-    } finally {
+catch (error) {
+  console.error("Reset password error:", error);
+  toast.error("Something went wrong. Please try again later.");
+}
+finally {
       setLoading(false); // Stop loading state
     }
   };
