@@ -1,8 +1,11 @@
 import mysql from "mysql2/promise";
 import nodemailer from "nodemailer";
+import withCors from "../../utils/withCors";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ message: "Method not allowed" });
+async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
   const { email } = req.body;
   const resetCode = Math.floor(100000 + Math.random() * 900000);
@@ -18,17 +21,21 @@ export default async function handler(req, res) {
     });
 
     const [rows] = await db.execute("SELECT * FROM userinfo WHERE email = ?", [email]);
-    if (rows.length === 0) return res.status(404).json({ message: "User not found" });
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    await db.execute("UPDATE userinfo SET reset_code = ?, reset_code_expiry = ? WHERE email = ?", [
-      resetCode,
-      expiry,
-      email,
-    ]);
+    await db.execute(
+      "UPDATE userinfo SET reset_code = ?, reset_code_expiry = ? WHERE email = ?",
+      [resetCode, expiry, email]
+    );
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
     await transporter.sendMail({
@@ -38,9 +45,11 @@ export default async function handler(req, res) {
       text: `Your reset code is: ${resetCode}\nIt will expire in 1 hour.\n\nReset here: https://your-frontend-domain.com/ResetPassword`,
     });
 
-    res.status(200).json({ message: "Reset code sent to your email." });
+    return res.status(200).json({ message: "Reset code sent to your email." });
   } catch (err) {
     console.error("❌ Error:", err);
-    res.status(500).json({ message: "Error sending reset code" });
+    return res.status(500).json({ message: "Error sending reset code" });
   }
 }
+
+export default withCors(handler);

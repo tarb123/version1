@@ -1,7 +1,10 @@
 import mysql from "mysql2/promise";
+import withCors from "../../utils/withCors";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ message: "Method not allowed" });
+async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
   const { name, email, password } = req.body;
 
@@ -20,9 +23,11 @@ export default async function handler(req, res) {
       password,
     ]);
 
-    res.status(200).json({ message: "User registered successfully!" });
+    return res.status(201).json({ message: "User registered successfully!" });
   } catch (err) {
-    console.error("❌ Database error:", err);
-    res.status(500).json({ message: "Database error" });
+    console.error("❌ Signup error:", err);
+    return res.status(500).json({ message: "Database error" });
   }
 }
+
+export default withCors(handler);
