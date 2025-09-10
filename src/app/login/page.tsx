@@ -11,8 +11,7 @@ const Login: React.FC = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  // ✅ Use env variable for API
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = "";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,7 +26,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post<AuthResponse>(
-        `${API_URL}/login`,
+        `/api/login`,
         formData
       );
 
@@ -55,7 +54,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await axios.post<{ token?: string }>(
-        `${API_URL}/google-auth`,
+        `${API_URL}/api/google-auth`,
         { token: credentialResponse.credential }
       );
 

@@ -22,10 +22,8 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post<AuthResponse>(
-        "http://192.168.18.62:5000/signup",formData
-      );
-  
+const response = await axios.post<AuthResponse>("/api/signup", formData);
+
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
         setMessage("Signup successful!");
@@ -83,12 +81,20 @@ return (
    <label className="absolute left-3 top-1 text-xs text-black font-medium font-sans serif">Name</label>
   </div>
 
-  <div className="relative w-full">
-    <input type="email" value={formData.email} onChange={handleChange}
-      required className="peer w-[370px] border-Blue border-2 px-3 pt-5 pb-1 text-xs font-sans serif"
-    />
-    <label className="absolute left-3 top-1 text-xs text-black font-medium font-sans serif">Email</label>
-  </div>  
+<div className="relative w-full">
+  <input
+    type="email"
+    name="email"   // 👈 add this
+    value={formData.email}
+    onChange={handleChange}
+    required
+    className="peer w-[370px] border-Blue border-2 px-3 pt-5 pb-1 text-xs font-sans serif"
+  />
+  <label className="absolute left-3 top-1 text-xs text-black font-medium font-sans serif">
+    Email
+  </label>
+</div>
+
 
   <div className="relative w-full">
     <input className="peer w-[370px] border-Blue border-2 px-3 pt-5 pb-1 text-xs font-sans serif"

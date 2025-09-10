@@ -1,15 +1,11 @@
 import mysql from "mysql2/promise";
 import jwt from "jsonwebtoken";
-import withCors from "../../utils/withCors";
+import { NextResponse } from "next/server";
 
-async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { name, password } = req.body;
-
+export async function POST(req) {
   try {
+    const { name, password } = await req.json();
+
     const db = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -20,23 +16,21 @@ async function handler(req, res) {
 
     const [rows] = await db.execute("SELECT * FROM userinfo WHERE name = ?", [name]);
     if (rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     const user = rows[0];
     if (user.password !== password) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
 
     const token = jwt.sign({ id: user.id, name: user.name }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    return res.status(200).json({ message: "Login successful!", token });
+    return NextResponse.json({ message: "Login successful!", token }, { status: 200 });
   } catch (err) {
     console.error("❌ Database error:", err);
-    return res.status(500).json({ message: "Database error" });
+    return NextResponse.json({ message: "Database error" }, { status: 500 });
   }
 }
-
-export default withCors(handler);
