@@ -4,6 +4,7 @@ import "./globals.css";
 
 import ResponsiveNav from "./components/nav/ResponsiveNav";
 import Footer from "./footer/Footer";
+import { Toaster } from "react-hot-toast";  // ✅ Import Toaster
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}> 
-        {/* <About/> */}
         <ResponsiveNav/>        
         {children}
         <Analytics />
         <Footer/>
+        <Toaster/>
       </body>
     </html>
   );

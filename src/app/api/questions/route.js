@@ -7,8 +7,8 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
   type: String,
   primaryTrait: String,
   text: String,
-  formatWeight: Number,
-  traitWeight: Number,
+  textTranslation: String,
+  formatWeight: Number, traitWeight: Number, sectionWeight: Number,
   reverse: Boolean,
   skills: [String],
   options: [{ label: String, value: Number }],
@@ -16,8 +16,10 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
     id: String, 
     optionKey: String, 
     text: String,
+    textTranslation: String,
     scores: mongoose.Schema.Types.Mixed,
     baseScoreValue: Number,
+    primaryTraitOverride: String,
   }],
 }));
 

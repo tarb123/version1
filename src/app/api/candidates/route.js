@@ -1,4 +1,3 @@
-// src/app/api/candidates/route.js
 import { NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import mongoose from 'mongoose';
@@ -6,6 +5,7 @@ import mongoose from 'mongoose';
 const PersonalityTestSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
+  age: String, // ✅ new field
   likertResponses: [],
   forcedResponses: [],
   sjtResponses: [],
@@ -13,15 +13,15 @@ const PersonalityTestSchema = new mongoose.Schema({
     {
       oldName: String,
       oldEmail: String,
+      oldAge: String,
       changedAt: { type: Date, default: Date.now },
     },
   ],
   timestamp: { type: Date, default: Date.now },
 });
 
-const PersonalityTest =
-  mongoose.models.PersonalityTest ||
-  mongoose.model('PersonalityTest', PersonalityTestSchema);
+const PersonalityTest = mongoose.models.PersonalityTest || mongoose.model('PersonalityTest', PersonalityTestSchema);
+
 
 // ✅ GET → check by email, oldEmail, or fetch all
 export async function GET(req) {
@@ -50,7 +50,7 @@ export async function GET(req) {
 
     const candidates = await PersonalityTest.find(
       {},
-      { name: 1, email: 1, history: 1, timestamp: 1, _id: 0 }
+      { name: 1, email: 1, age: 1, history: 1, timestamp: 1, _id: 0 }
     );
 
     return NextResponse.json({ success: true, candidates });
@@ -67,11 +67,12 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     await dbConnect();
-    const { name, email } = await req.json();
+    const { name, email, age } = await req.json();
 
     const candidate = new PersonalityTest({
       name,
       email,
+      age,
       timestamp: new Date(),
     });
 
@@ -95,7 +96,7 @@ export async function POST(req) {
 export async function PUT(req) {
   try {
     await dbConnect();
-    const { oldEmail, name, email } = await req.json();
+    const { oldEmail, name, email, age } = await req.json();
 
     // Always look up using oldEmail
     const candidate = await PersonalityTest.findOne({ email: oldEmail });
@@ -109,11 +110,12 @@ export async function PUT(req) {
 
     let updated = false;
 
-    // If name or email is changing → log old values in history
-    if (candidate.name !== name || candidate.email !== email) {
+    // If name, email, or age is changing → log old values in history
+    if (candidate.name !== name || candidate.email !== email || candidate.age !== age) {
       candidate.history.push({
         oldName: candidate.name,
         oldEmail: candidate.email,
+        oldAge: candidate.age,
         changedAt: new Date(),
       });
       updated = true;
@@ -122,6 +124,7 @@ export async function PUT(req) {
     // Apply updates
     candidate.name = name;
     candidate.email = email;
+    candidate.age = age;
 
     await candidate.save();
 

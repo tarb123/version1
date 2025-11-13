@@ -33,8 +33,12 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "backend/personality/server.tsx", "backend/personality/server.js", "src/app/PP/QuestionBlock copy"  ],
+    ".next/types/**/*.ts",
+    "backend/personality/server.tsx",
+    "backend/personality/server.js",
+    "src/app/PP/QuestionBlock copy",
+    "src/app/M/page.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]

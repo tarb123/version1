@@ -13,45 +13,44 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ onSuccess, onFail
   const router = useRouter();
 
   const handleSuccess = async (response: CredentialResponse) => {
-    if (!response.credential) {
-      console.error("No credential found in response");
-      return;
+    if (!response.credential) 
+    {
+      console.error("No credential found in response"); return;
     }
 
     try {
       const decoded: { name: string; email: string; sub: string } = jwtDecode(response.credential);
       console.log("Google User:", decoded);
 
-      const res = await fetch("http://192.168.18.62:5000/google-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: decoded.name,
-          email: decoded.email,
-          googleId: decoded.sub,
-        }),
+      const res = await fetch("/api/google-login", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+        { name: decoded.name, email: decoded.email, googleId: decoded.sub, }
+        ),
       });
 
       const data = await res.json();
       console.log("Server Response:", data);
 
-      if (data.token) {
+      if (data.token) 
+      {
         localStorage.setItem("token", data.token);
         router.push("/Main");
-      } else {
-        console.error("Login failed:", data.message);
-      }
-    } catch (error) {
-      console.error("Login Error:", error);
-    }
+      } 
+      else 
+      { console.error("Login failed:", data.message); }
+    } 
+    catch (error) 
+    { console.error("Login Error:", error); }
 
     await onSuccess(response);
   };
 
-  const handleFailure = () => {
-    console.error("Google Login Failed");
-    onFailure();
-  };
+const handleFailure = (error?: unknown) => {
+  console.error("Google Login Failed:", error);
+  onFailure();
+};
+
 
   return (
     <GoogleOAuthProvider clientId="635546059677-fjd1smc038ev74b6h16gp2nvv6qm2e4r.apps.googleusercontent.com">

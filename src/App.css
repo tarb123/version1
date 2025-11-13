@@ -58,13 +58,13 @@ body {
     box-shadow: 0 2px 15px rgba(0,0,0,0.05);
     /* background-color: #e2e5e9; */
   }
-  
+ 
+
   #quiz-container h1, #results-container h2{
     text-align: center;
     color: #ff0505;
     margin-bottom: 50px;
     margin-top: 20px;
-    font-weight: bold;
   }
   
 .quiz-subheading {
@@ -82,26 +82,26 @@ body {
     color: #34495e;
   }
   
-  /* Labels for Radio Buttons (FC, SJT) */
-  .answer-label {
-    display: block;
-    background-color: rgb(46 49 146 / var(--tw-bg-opacity, 1));
-    color: white;
-    margin: 3px ;
-    padding: 5px;
-    border-radius: 4px;
-    font-size: 15px;
-    cursor: pointer;
-    border: 1px solid rgb(46 49 146 / var(--tw-bg-opacity, 1));
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-  }
-  
-  .answer-label:hover {
-    background-color: whitesmoke;    
-    color: #000;
+.answer-label {
+  display: block;
+  background: linear-gradient(to right, pink, #00838F); /* 🌈 Gradient background */
+  color: black;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: small;
+  cursor: pointer;
+  border: 1px solid rgba(46, 49, 146, 1);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
 
-   }
-  
+/* ✅ Hover effect (invert + subtle lift) */
+.answer-label:hover {
+  background: linear-gradient(to right, pink, #00838F);
+  color: black;
+  transform: scale(1.02);
+}
+
   .answer-label input[type="radio"] {
     margin-right: 10px;
     accent-color: #3498db; /* Style the radio button itself */
@@ -120,7 +120,7 @@ body {
   }
   
   .likert-scale span {
-    font-size: 15px;
+    font-size:small;
     color: white;
     text-align: center;
     flex: 1;
@@ -147,9 +147,10 @@ body {
   
   /* Results Page Specific Styles */
   #results-container {
-      background-color: whitesmoke; 
-      max-width: 794px;  margin: 0px auto;   
-    padding: 110px 50px;
+    background-color: white; 
+    max-width: 794px;  
+    margin: -40px auto;   
+    padding: 110px 30px;
     align-items: center;
    }
   
@@ -227,15 +228,14 @@ body {
    box-shadow: 1px rgba(0,0,0,0.05);
 }
 
-
-  h3.detailed-skills-header {
+h3.detailed-skills-header {
     margin-top: 50px; /* Extra space before detailed list */
-  }
+}
   
-  .categorized-skills {
+.categorized-skills {
   width: 100%;
   padding: 1rem;
- }
+}
 
  
 .skill-category h5 {
@@ -387,6 +387,7 @@ body {
   .chart-container-with-defs {
     /* Styles for the container holding chart + defs */
     background-color: #fdfdfe;
+    width:fit-content;
     padding: 20px;
     border-radius: 6px;
     border: 1px solid #ecf0f1;
@@ -439,3 +440,18 @@ body {
    background: whitesmoke;
   color: black;
 } */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+}

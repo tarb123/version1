@@ -1,4 +1,6 @@
-"use client"; import { useState } from "react";import Link from "next/link";
+"use client"; import { useState } from "react";
+import Link from "next/link";
+
 import { toast, ToastContainer } from "react-toastify";import 'react-toastify/dist/ReactToastify.css';
 
 function ForgotPassword() {
@@ -8,7 +10,7 @@ function ForgotPassword() {
     e.preventDefault(); setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/send-code", 
+      const response = await fetch("/api/send-code", 
       {
         method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ email }),
       });

@@ -96,7 +96,7 @@ const Header = () => {
   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span> 
   </Link> 
           
-  <Link href="/EnterNamePage" className="relative text-white text-sm px-3 py-1 transition duration-300 group"> 
+  <Link href="/Main" className="relative text-white text-sm px-3 py-1 transition duration-300 group"> 
   <i className="fa fa-clipboard-list fa-brain mr-2 text-white" aria-hidden="true"></i> 
   <span className="font-[Jameel Noori Nastaleeq] transition-colors duration-300 text-white group-hover:text-Red">خودی</span>{' '} 
   <span className="font-sans serif font-semibold text-white">Personality Assessment</span> 
@@ -148,7 +148,7 @@ const Header = () => {
       <span className="absolute bottom-0 left-0 w-0 h-[3px] bg-Red transition-all duration-300 group-hover:w-full"></span>
       </Link>
 
-      <Link href="/EnterNamePage" className="mb-2 relative text-white text-base py-1 transition duration-300 group">
+      <Link href="/Main" className="mb-2 relative text-white text-base py-1 transition duration-300 group">
         <i className="fa fa-clipboard-list fa-brain mr-2" aria-hidden="true"></i>
         <span className="font-[Jameel Noori Nastaleeq] transition-colors duration-300 text-white group-hover:text-Red">خودی</span>{' '}
         <span className="ml-1">Personality Assessment</span>

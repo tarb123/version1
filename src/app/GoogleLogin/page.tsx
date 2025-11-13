@@ -4,9 +4,9 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 import { CredentialResponse } from "@react-oauth/google";
 
 const GoogleLoginPage: React.FC = () => {
+  
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     console.log("Google login success:", credentialResponse);
-    // Here you could send token to your backend
   };
 
   const handleGoogleFailure = () => {
@@ -15,12 +15,7 @@ const GoogleLoginPage: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <GoogleLoginButton
-        onSuccess={handleGoogleSuccess}
-        onFailure={handleGoogleFailure}
-      />
+      <GoogleLoginButton onSuccess={handleGoogleSuccess} onFailure={handleGoogleFailure}/>
     </div>
-  );
-};
-
+  );};
 export default GoogleLoginPage;
