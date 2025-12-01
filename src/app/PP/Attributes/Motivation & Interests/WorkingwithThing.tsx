@@ -85,7 +85,7 @@ const WorkingWithThingsScore: React.FC<WorkingWithThingsScoreProps> = ({
   key={index}
   className={[
     "h-3 flex-1 rounded-sm transition-all duration-300",
-    isFilled ? "bg-gradient-to-r from-orange-400 to-pink" : "bg-black",
+    isFilled ? "bg-gradient-to-r from-orange-400 to-pink" : "bg-slate-300",
   ].join(" ")}
   aria-label={`score-segment-${index}`}
 />
