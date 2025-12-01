@@ -17,7 +17,7 @@ const Awrapper = () => {
           {stats.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 bg-[#081b9c] p-4 rounded-lg shadow-md hover:shadow-lg transition hover:scale-105"
+              className="flex items-center gap-4 bg-blue-900 p-4 rounded-lg shadow-md hover:shadow-lg transition hover:scale-105"
             >
               {/* Icon */}
               <div className="min-w-[48px] min-h-[48px] flex items-center justify-center">

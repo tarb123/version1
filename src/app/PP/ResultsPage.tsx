@@ -4,6 +4,17 @@ import SpiderChart from "./SpiderChart";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Brain, MessageCircle, ShieldCheck, Users, Trophy, BookOpen, UserCheck, } from "lucide-react";
+import DISCCircularChart from "./DISCCircularChart";
+import MIBarChart from "./MIBarChart";
+import WorkingWithNumbersScore from "./Attributes/Abilities/WorkingwithNum";
+import WorkingWithWordsScore from "./Attributes/Abilities/WorkingwithWord";
+import WorkingWithShapesScore from "./Attributes/Abilities/WorkingwithShape";
+import WorkingWithPeopleScore from "./Attributes/Motivation & Interests/WorkingwithPeople";
+import WorkingWithDataScore from "./Attributes/Motivation & Interests/WorkingwithData";
+import WorkingWithThingsScore from "./Attributes/Motivation & Interests/WorkingwithThing";
+
+import { QuestionData } from "./QuestionBlock";
+
 
 const formatName = (camelCaseName: string) => {
   if (!camelCaseName) return "";
@@ -75,52 +86,52 @@ const CareerMatchProfile: React.FC<CareerMatchProfileProps> = ({ matches }) => {
   );
 };
 
-interface TraitGroupSectionWithBarProps {
-  title: string;
-  traitData: Record<string, number | null | undefined>;
-}
+// interface TraitGroupSectionWithBarProps {
+//   title: string;
+//   traitData: Record<string, number | null | undefined>;
+// }
 
-const TraitGroupSectionWithBar = ({ title, traitData, }: TraitGroupSectionWithBarProps) => {
-  if (!traitData || Object.keys(traitData).length === 0) return null;
+// const TraitGroupSectionWithBar = ({ title, traitData, }: TraitGroupSectionWithBarProps) => {
+//   if (!traitData || Object.keys(traitData).length === 0) return null;
 
-  const calculateBarWidth = (score: number) => {
-    const minScore = 1;
-    const maxScore = 5;
-    const percentage = ((score - minScore) / (maxScore - minScore)) * 100;
-    return Math.max(0, Math.min(100, percentage));
-  };
+//   const calculateBarWidth = (score: number) => {
+//     const minScore = 1;
+//     const maxScore = 5;
+//     const percentage = ((score - minScore) / (maxScore - minScore)) * 100;
+//     return Math.max(0, Math.min(100, percentage));
+//   };
 
-  return (
-<div className="trait-section trait-section-list">
-  <h4>{title}</h4>
-  <ul>
-    {Object.entries(traitData)
-      .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-      .map(([traitKey, scoreValue]) => {
-        const score = Number(scoreValue);
-        const isValidScore = !isNaN(score);
-        return (
-          <li key={traitKey}>
-            <div className="trait-label-score">
-              <strong>{formatName(traitKey)}:</strong>
-              {isValidScore ? score : "N/A"}
-            </div>
-            {isValidScore && (
-              <div
-                className="score-bar-container"
-                title={`Score: ${score} out of 5`}
-              >
-                <div style={{ width: `${calculateBarWidth(score)}%` }}></div>
-              </div>
-            )}
-          </li>
-        );
-      })}
-  </ul>
-</div>
+//   return (
+// <div className="trait-section trait-section-list">
+//   <h4>{title}</h4>
+//   <ul>
+//     {Object.entries(traitData)
+//       .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+//       .map(([traitKey, scoreValue]) => {
+//         const score = Number(scoreValue);
+//         const isValidScore = !isNaN(score);
+//         return (
+//           <li key={traitKey}>
+//             <div className="trait-label-score">
+//               <strong>{formatName(traitKey)}:</strong>
+//               {isValidScore ? score : "N/A"}
+//             </div>
+//             {isValidScore && (
+//               <div
+//                 className="score-bar-container"
+//                 title={`Score: ${score} out of 5`}
+//               >
+//                 <div style={{ width: `${calculateBarWidth(score)}%` }}></div>
+//               </div>
+//             )}
+//           </li>
+//         );
+//       })}
+//   </ul>
+// </div>
 
-  );
-};
+//   );
+// };
 
 interface CategorizedSkillsProps {
   categories: Record<string, string[]>;
@@ -213,7 +224,9 @@ interface ResultsPageProps {
   onRestart: () => void;
   candidateName: string; // 👈 added
   candidateEmail: string; // 👈 added
-}
+  // ✅ ADD THESE:
+  allQuestions: QuestionData[];
+  userResponses: Record<string, string | number | undefined>;}
 
 const ResultsPage: React.FC<ResultsPageProps> = ({
   skillScores,
@@ -223,7 +236,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
   // onRestart,
   candidateName,
   candidateEmail,
+  allQuestions,
+  userResponses,
 }) => {
+    // const [workingWithNumbersScoreState, setWorkingWithNumbersScoreState] = useState<number | undefined>(undefined);
+
   const downloadPDF = () => {
     const input = document.getElementById("results-container");
     if (!input) return;
@@ -269,9 +286,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
   const bigFiveData = bigFiveLabels.map((label) => traitScores[label] ?? 0);
   const bigFiveChartData = { labels: bigFiveLabels, data: bigFiveData };
 
-  const honestyHumilityListData = {
-    "Honesty-Humility": traitScores.HonestyHumility ?? 0,
-  };
+  // const honestyHumilityListData = {
+  //   "Honesty-Humility": traitScores.HonestyHumility ?? 0,
+  // };
 
   const miLabels = [
     "Linguistic",
@@ -308,25 +325,55 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
         <h3 className="trait-summary-header">Summary Profiles (Visualized)</h3>
         <div className="trait-visual-grid">
           <div className="trait-row">
-            <div className="trait-col">
-              <SpiderChart chartData={miChartData}  title="Multiple Intelligences Profile" />
+            
+            <div>
+              <DISCCircularChart chartData={discChartData} />
+              {/* <SpiderChart chartData={miChartData}  title="Multiple Intelligences Profile" /> */}
             </div>
 
             <div className="trait-col">
-              <SpiderChart chartData={discChartData} title="DISC Profile" />
+              <SpiderChart chartData={bigFiveChartData} title="BIG FIVE/ OCEAN PROFILE" />
             </div>
+
+            <MIBarChart chartData={miChartData} title="MULTI INTELLIGENCES PROFILE" />
+ 
           </div>
-
-          <div className="trait-row">
-            <div className="trait-col">
-              <SpiderChart chartData={bigFiveChartData} title="Big Five Profile" />
-            </div>
-
-            <div className="px-30">
-              <TraitGroupSectionWithBar title="Honesty-Humility" traitData={honestyHumilityListData}/>
-            </div>
-          </div>
+          
         </div>
+        
+{/* ===================== ATTRIBUTES SECTION ===================== */}
+<div className="w-full">
+
+  {/* Main Heading */}
+  <h3 className="text-lg font-bold mb-2">Attributes</h3>
+
+  {/* -------- Abilities Section -------- */}
+  <div className="w-full border-2 border-whitesmoke rounded-lg shadow-md py-3 p-5">
+    <h4 className="text-lg text-center font-bold text-sky-700 mt-5">Abilities</h4>
+
+    {/* ✅ no vertical gap between these */}
+    <div className="flex flex-col gap-0 space-y-0">
+      <WorkingWithNumbersScore questions={allQuestions} responses={userResponses} />
+      <WorkingWithWordsScore questions={allQuestions} responses={userResponses} />
+      <WorkingWithShapesScore questions={allQuestions} responses={userResponses} />
+    </div>
+  </div>
+
+  {/* -------- Motivation & Interests Section -------- */}
+  <div className="w-full border-2 border-whitesmoke rounded-lg shadow-md py-3 p-5 mt-5">
+    <h4 className="text-lg text-center font-bold text-sky-700 mt-5">Motivation &amp; Interests</h4>
+
+    {/* ✅ no vertical gap between these */}
+    <div className="flex flex-col gap-0 space-y-0">
+      <WorkingWithPeopleScore questions={allQuestions} responses={userResponses} />
+      <WorkingWithDataScore questions={allQuestions} responses={userResponses} />
+      <WorkingWithThingsScore questions={allQuestions} responses={userResponses} />
+    </div>
+  </div>
+
+</div>
+{/* ===================== END ATTRIBUTES SECTION ===================== */}
+
 
         <h3 className="detailed-skills-header">Detailed Skill Scores</h3>
         <CategorizedSkills categories={skillCategories} scores={skillScores}/>

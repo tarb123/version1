@@ -3,18 +3,7 @@
     "development"
   ],
   "hints": {
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "scroll-behavior",
-          "scrollbar-width",
-          "scroll-behavior: smooth",
-          "scrollbar-width: none",
-          "border-inline"
-        ]
-      }
-    ],
+    "compat-api/css": "off",
     "no-inline-styles": "off",
     "axe/forms": [
       "default",

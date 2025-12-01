@@ -44,7 +44,7 @@ const Footer = () => {
 
       
       {/* Footer Section */}
-      <footer className="bg-[#041580] text-white py-8 px-4 lg:px-16">
+      <footer className="bg-blue-950 text-white py-8 px-4 lg:px-16">
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
     {/* Logo and Social Links */}
     <div className="text-center lg:text-left -ml-52 lg:ml-0">
@@ -124,8 +124,7 @@ const Footer = () => {
       <h3 className="lg:text-lg text:sm font-semibold mb-4 lg:ml-28">Contact Info</h3>
       <ul className="space-y-2">
         <li className="flex items-center justify-center lg:justify-start lg:text-sm text-xs lg:ml-28">
-          <i className="fa fa-map-marker-alt mr-2"></i>
-          B-65, Block2, Gulshan-e-Iqbal, Karachi, Pakistan
+          <i className="fa fa-map-marker-alt mr-2"></i>B-65, Block2, Gulshan-e-Iqbal, Karachi, Pakistan
         </li>
         <li className="flex items-center justify-center lg:justify-start lg:text-sm text-xs lg:ml-28">
           <i className="fa fa-phone-alt mr-2"></i>
@@ -141,7 +140,7 @@ const Footer = () => {
 </footer>
 
       {/* Legal Section */}
-      <div className="bg-Blue text-white py-2">
+      <div className="bg-blue-950 text-white py-2">
         <div className="container mx-auto text-center ">
           <p className="text-xs lg:text-lg">
             {/* Copyright  */}

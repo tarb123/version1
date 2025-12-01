@@ -5,17 +5,17 @@ const AboutCard = () => {
   return (
     <div className="relative  overflow-hidden">
       {/* Background Video */}
-      <video
+      {/* <video
         src="/t2.mp4"
         autoPlay
         muted
         loop
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      />
+      /> */}
 
       {/* Foreground Content */}
-      <div className="relative z-10 py-14">
+      <div className="relative z-10 py-14 bg-blue-950">
         <section>
           
           {/* Video Section */}

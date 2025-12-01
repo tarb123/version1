@@ -161,123 +161,6 @@ const handleSubmit = async () => {
     alert("⚠️ Something went wrong. Please try again.");
   }
 
-  // --- Initialize Accumulators ---
-  // const skillScoresAcc = skillList.reduce((acc, skill) => {
-  //   acc[skill] = 0;
-  //   return acc;
-  // }, {} as { [key: string]: number });
-
-  // const traitScoreAcc = traitList.reduce((acc, trait) => {
-  //   acc[trait] = { weightedScoreSum: 0, weightSum: 0 };
-  //   return acc;
-  // }, {} as { [key: string]: { weightedScoreSum: number; weightSum: number } });
-
- // --- Perform Dual Calculation in One Pass ---
-  // questions.forEach(question => {
-  //   const selectedValue = selectedAnswers[question.id];
-  //   let selectedAnswerData = null;
-  //   if (!selectedValue) return;
-
-  //   if (question.type === "likert" && question.answers) {
-  //     selectedAnswerData = question.answers.find(
-  //       (ans) => "value" in ans && (ans).value === selectedValue
-  //     );
-  //   } else if (question.answers) {
-  //     selectedAnswerData = question.answers.find((ans) => ans.id === selectedValue);
-  //   }
-
-  //   if (selectedAnswerData) {
-  //     const formatWeight = getFormatWeight(question.type);
-  //     const traitWeight = question.traitWeight || 1.0;
-  //     const fullQuestionWeight = formatWeight * traitWeight;
-                
-  //     // 1. Accumulate Granular Skill Score Contributions
-  //     if (selectedAnswerData.scores) {
-  //       const scores = selectedAnswerData.scores as unknown as Record<string, number>;
-  //       for (const skill in scores) {
-  //         if (skillScoresAcc.hasOwnProperty(skill)) {
-  //           const baseSkillScore = Number(scores[skill]);
-  //           if (!isNaN(baseSkillScore)) {
-  //             skillScoresAcc[skill] += baseSkillScore * fullQuestionWeight;
-  //           }
-  //         }
-  //       }
-  //     }
-
-      // 2. Accumulate Direct Trait Score Contribution
-  //     const primaryTrait = selectedAnswerData.primaryTraitOverride || question.primaryTrait;
-  //       const baseScoreForTrait = selectedAnswerData.baseScoreValue;
-  //       if (primaryTrait && traitScoreAcc.hasOwnProperty(primaryTrait) && baseScoreForTrait !== undefined) {
-  //       const baseScoreNum = Number(baseScoreForTrait);
-  //         if(!isNaN(baseScoreNum)) {
-  //          traitScoreAcc[primaryTrait].weightedScoreSum += baseScoreNum * fullQuestionWeight;
-  //          traitScoreAcc[primaryTrait].weightSum += fullQuestionWeight;
-  //         }
-  //     }
-  //   }
-  // });
-
-  // --- Finalize Scores ---
-  // const finalSkillScores: { [key: string]: number } = {}; // Raw weighted scores
-  // const normalizedSkillScores: { [key: string]: number } = {}; // Normalized 0-100 for category aggregation
-
-  // for (const skill in skillScoresAcc) {
-  //   const rawScore = parseFloat(skillScoresAcc[skill].toFixed(3));
-  //   finalSkillScores[skill] = rawScore;
-  //   // Normalize granular skill score 0-100 based on calculated max
-  //   normalizedSkillScores[skill] = maxSkillScores[skill] > 0
-  //   ? Math.max(0, Math.min(100, (rawScore / maxSkillScores[skill]) * 100))
-  //   : 0;
-  // }
-
-  // setFinalScores(finalSkillScores);// Store raw weighted scores
-
-  // const finalTraitScores: { [key: string]: number } = {}; // Weighted average base score (1-5 range approx)
-  // const normalizedTraitScores: { [key: string]: number } = {}; // Normalized 0-100 for matching
-  
-  // for (const trait in traitScoreAcc) {
-  //   let avgScore = 0;
-  //   if (traitScoreAcc[trait].weightSum > 0) {
-  //     avgScore = traitScoreAcc[trait].weightedScoreSum / traitScoreAcc[trait].weightSum;
-  //   }
-  //   finalTraitScores[trait] = parseFloat(avgScore.toFixed(3));
-  //   // Normalize trait score 0-100 (assuming practical range 1-5)
-  //   normalizedTraitScores[trait] = Math.max(0, Math.min(100, ((avgScore - 1) / 4) * 100));
-  // }
-  // setTraitScores(finalTraitScores); // Store 1-5 range scores for display
-
-  // // --- Calculate Broad Skill Category Scores (0-100) for Matching ---
-  // const normalizedCategoryScores: Record<string, number> = {};
-        
-  // broadSkillCategories.forEach((categoryKey: TraitCategory) => {
-  // const skillsInCategory = skillCategoryMapping[categoryKey];
-  //   let categoryScoreSum = 0;
-  //   let count = 0;
-    
-  //   if (skillsInCategory) {
-  //   skillsInCategory.forEach((skillKey: string) => {
-      
-  //   if (normalizedSkillScores[skillKey] !== undefined) {
-  //   categoryScoreSum += normalizedSkillScores[skillKey]; // Average the normalized skill scores
-  //   count++;
-  //   }
-
-  //   });
-  // }
-  //   normalizedCategoryScores[categoryKey] = count > 0 ? parseFloat((categoryScoreSum / count).toFixed(1)) : 0;
-  // });
-          
-  // // Add relevant MI traits to the category scores object for matching
-  // normalizedCategoryScores['LogicalMathematical'] = normalizedTraitScores['LogicalMathematical'];
-  // normalizedCategoryScores['Spatial'] = normalizedTraitScores['Spatial'];
-  
-  // --- Calculate Career Matches ---
-  // const matches = calculateCareerMatches(normalizedTraitScores, normalizedSkillScores);
-  // setCareerMatches(matches);
-
-  // setQuizState("results");
-  // window.scrollTo(0, 0);
-
 };
   
 const saveResponses = async () => {
@@ -294,23 +177,42 @@ const saveResponses = async () => {
           : null,
     }));
 
-  const forcedResponses = questions
+  // const forcedResponses = questions
+  //   .filter((q) => q.type === "forced")
+  //   .map((q) => ({
+  //     questionId: q.id,
+  //     optionKey:
+  //       q.answers?.find((ans) => ans.id === selectedAnswers[q.id])?.optionKey ||
+  //       "No response",
+  //   }));
+
+    const forcedResponses = questions
     .filter((q) => q.type === "forced")
     .map((q) => ({
       questionId: q.id,
       optionKey:
-        q.answers?.find((ans) => ans.id === selectedAnswers[q.id])?.optionKey ||
+        findSelectedAnswer(q, selectedAnswers[q.id])?.optionKey ||
         "No response",
     }));
 
-  const sjtResponses = questions
+
+  // const sjtResponses = questions
+  //   .filter((q) => q.type === "sjt")
+  //   .map((q) => ({
+  //     questionId: q.id,
+  //     optionKey:
+  //       q.answers?.find((ans) => ans.id === selectedAnswers[q.id])?.optionKey ||
+  //       "No response",
+  //   }));
+    const sjtResponses = questions
     .filter((q) => q.type === "sjt")
     .map((q) => ({
       questionId: q.id,
       optionKey:
-        q.answers?.find((ans) => ans.id === selectedAnswers[q.id])?.optionKey ||
+        findSelectedAnswer(q, selectedAnswers[q.id])?.optionKey ||
         "No response",
     }));
+
 
   const payload = {
     name: selectedAnswers["INFO-NAME"] || "",
@@ -333,6 +235,21 @@ const saveResponses = async () => {
   toast.success("✅ Responses saved successfully!");
 };
 
+const findSelectedAnswer = (q: QuestionData, selectedValue: string | number) => {
+  if (!q.answers) return undefined;
+
+  // 1) normal old flow: match by id
+  const byId = q.answers.find((ans) => ans.id === selectedValue);
+  if (byId) return byId;
+
+  // 2) new fallback: match by optionKey
+  const byOptionKey = q.answers.find((ans) => ans.optionKey === selectedValue);
+  if (byOptionKey) return byOptionKey;
+
+  return undefined;
+};
+
+
 const generateReport = () =>  {
   
   // --- Initialize Accumulators ---
@@ -350,10 +267,18 @@ const traitScoreAcc = traitList.reduce((acc, trait) => {
     let selectedAnswerData = null;
     if (!selectedValue) return;
 
+    // if (question.type === "likert" && question.answers) {
+    //   selectedAnswerData = question.answers.find((ans) => "value" in ans && (ans).value === selectedValue);
+    // } else if (question.answers) {
+    //   selectedAnswerData = question.answers.find((ans) => ans.id === selectedValue);
+    // }
+
     if (question.type === "likert" && question.answers) {
-      selectedAnswerData = question.answers.find((ans) => "value" in ans && (ans).value === selectedValue);
+    selectedAnswerData = question.answers.find(
+    (ans) => "value" in ans && (ans).value === selectedValue
+    );
     } else if (question.answers) {
-      selectedAnswerData = question.answers.find((ans) => ans.id === selectedValue);
+     selectedAnswerData = findSelectedAnswer(question, selectedValue);
     }
 
     if (selectedAnswerData) {
@@ -637,6 +562,9 @@ return (
       onRestart={handleRestart}
       candidateName={String(selectedAnswers["INFO-NAME"] || "")}
       candidateEmail={String(selectedAnswers["INFO-EMAIL"] || "")}
+      // ✅ ADD THESE TWO:
+      allQuestions={questions}
+      userResponses={selectedAnswers}
     />
    )}
   {/* ✅ Paste here, at the very bottom */}

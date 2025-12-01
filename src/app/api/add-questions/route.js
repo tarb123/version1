@@ -9,10 +9,13 @@ const QuestionSchema = new mongoose.Schema({
   text: String,
   textTranslation: String, 
   formatWeight: Number, traitWeight: Number, sectionWeight: Number,
+  sectionA: [String],   // ✅ accept arrays like ["Abilities"]
+  sectionB: [String],   // ✅ accept arrays like ["MotivationInterest"]
+
   reverse: Boolean,
   skills: [String],
   options: [{ label: String, value: Number}],
-    answers: [   // <-- you missed this earlier
+  answers: [   // <-- you missed this earlier
     {
       id: String,
       optionKey: String,
@@ -23,6 +26,7 @@ const QuestionSchema = new mongoose.Schema({
       primaryTraitOverride: String,
     },
   ],
+
 });
 
 const Question = mongoose.models.Question || mongoose.model("Question", QuestionSchema);

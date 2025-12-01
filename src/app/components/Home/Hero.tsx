@@ -13,14 +13,14 @@ const Home = () => {
   return (
     <div>
       <ServicesList/>
-       <section className="hero top-1 bg-cover h-52 flex items-center justify-center bg-gradient-to-r from-[#7f81d1] to-[#0cbaf4]">
+       <section className="hero top-1 bg-cover h-52 flex items-center justify-center bg-white">
     <div className="container mx-auto px-6 sm:px-6 lg:px-8 md:px-2 xl:px-1">
       <div className="row flex flex-col items-center text-center text-Blue space-y-6">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold -mt-6">
-          Sanjeed<span className="text-Red">a!</span> Stands For:
+          Sanjeed<span className="text-Red">a!</span> stands for:
         </h1>
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-center max-w-xl mx-auto leading-relaxed text-Red font-bold">
-          Career development for people serious about
+        <p className="text-2xl font-sans serif text-Red font-bold">
+          Career Development for People Serious About
         </p>
         <div className="font-bold">
           <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-center max-w-xl mx-auto leading-relaxed text-Red">

@@ -382,25 +382,48 @@ h3.detailed-skills-header {
     }
   }
   
-  /* --- Styles for Trait Definitions --- */
-  
-  .chart-container-with-defs {
-    /* Styles for the container holding chart + defs */
-    background-color: #fdfdfe;
-    width:fit-content;
-    padding: 20px;
-    border-radius: 6px;
-    border: 1px solid #ecf0f1;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-  }
-  
-  .chart-container-with-defs .chart-container {
-    padding: 0; /* Remove padding from inner chart container if needed */
-    border: none;
-    box-shadow: none;
-    background: none;
-  }
-  
+.bigfive-chart-container {
+  border-width: 2px; /* equivalent to border-2 */
+  border-color: #f5f5f5; /* whitesmoke */
+  border-style: solid;
+  border-radius: 0.5rem; /* rounded-lg */
+  background-color: white; /* bg-white */
+  padding: 10px;
+
+  width: 350px;  
+  height: 285px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  overflow: visible; /* allow label overflow */
+}
+
+.bigfive-chart-container h1 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.bigfive-chart {
+  width: 300px;
+  height: 260px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: -12px; /* perfect fit with DISC */
+  overflow: visible;
+}
+
+.bigfive-chart canvas {
+  overflow: visible !important;
+}
+
+
+
   /* STYLES for Static Definition Section --- */
 
 /* component.css */

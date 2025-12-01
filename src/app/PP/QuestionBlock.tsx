@@ -9,7 +9,7 @@ export type Option = {
 export type Answer = {
   primaryTraitOverride: string | undefined;
   traitScores: string;
-  id: string;
+  id: string; 
   optionKey: string;
   text: string;
   textTranslation?: string;
@@ -30,6 +30,8 @@ export type QuestionData = {
   traitWeight?: number;
   sectionWeight?: number;
   skills?: string[];
+  sectionA?: string[];   // ✅ ADD // ✅ accept arrays like ["Abilities"]
+  sectionB?: string[];   // ✅ ADD // ✅ accept arrays like ["MotivationInterest"]
 };
 
 type QuestionBlockProps = {
@@ -48,6 +50,71 @@ function QuestionBlock({
   const { id: questionId, type, text, answers } = questionData;
 
   const [showTranslation, setShowTranslation] = React.useState(false); // 🔹 Urdu off by default
+
+  // ✅ Special renderer for Shape-1 pattern (frontend-only)
+  const renderShape1Pattern = () => {
+    return (
+      <div className="w-full flex justify-center">
+        <div className="grid grid-cols-3 border-2 border-black">
+          {/* Row 1 */}
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟢</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🔺</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟦</div>
+
+          {/* Row 2 */}
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🔺</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟦</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟢</div>
+
+          {/* Row 3 */}
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟦</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl">🟢</div>
+          <div className="w-14 h-14 flex items-center justify-center border border-black text-2xl"></div>
+        </div>
+      </div>
+    );
+  };
+  // ✅ Frontend-only L-shape for shape2
+const renderShape2LShape = () => {
+  return (
+    <div className="w-full flex justify-center ">
+      <svg
+        width="220"
+        height="180"
+        viewBox="0 0 220 180"
+        className="block"
+        aria-label="L-shape"
+       >
+        {/* ✅ Single continuous outer L stroke */}
+        <path
+          d="M40 10 L40 150 L200 150"
+          fill="none"
+          stroke="Red"
+          strokeWidth="6"
+          strokeLinecap="square"
+          strokeLinejoin="miter"
+        />
+      </svg>
+    </div>
+  );
+};
+// ✅ Frontend-only pattern for shape3
+const renderShape3Pattern = () => {
+  return (
+    <div className="w-full flex justify-center">
+      <div className="grid grid-cols-2 border-2 border-black">
+        {/* Row 1 */}
+        <div className="w-16 h-16 flex items-center justify-center border border-black text-2xl">🟢</div>
+        <div className="w-16 h-16 flex items-center justify-center border border-black text-2xl">🟢</div>
+
+        {/* Row 2 */}
+        <div className="w-16 h-16 flex items-center justify-center border border-black text-2xl">🟢</div>
+        <div className="w-16 h-16 flex items-center justify-center border border-black text-2xl">🟦</div>
+      </div>
+    </div>
+  );
+};
+
 
   const renderAnswers = () => {
     switch (type) {
@@ -83,34 +150,151 @@ function QuestionBlock({
           </div>
         );
 
-      case "forced":
-      case "sjt":
-        return answers?.map((answer) => (
-          <label key={answer.id} className="answer-label block mb-2 cursor-pointer">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name={`question-${questionId}`}
-                  value={answer.id}
-                  checked={selectedAnswerValue === answer.id}
-                  onChange={() => onAnswerChange(questionId, answer.id)}
-                />
-                <span className="text-xs font-medium">{answer.text}</span>
+      // case "forced":
+      // case "sjt":
+        // return answers?.map((answer) => (
+        //   <label key={answer.id} className="answer-label block mb-2 cursor-pointer">
+        //     <div className="flex flex-col">
+        //       <div className="flex items-center gap-2">
+        //         <input
+        //           type="radio"
+        //           name={`question-${questionId}`}
+        //           value={answer.id}
+        //           checked={selectedAnswerValue === answer.id}
+        //           onChange={() => onAnswerChange(questionId, answer.id)}
+        //         />
+        //         <span className="text-xs font-medium">{answer.text}</span>
+        //       </div>
+        //       {/* ✅ Urdu below English when ON */}
+        //       {showTranslation && answer.textTranslation && (
+        //         <div
+        //           className="text-sm text-right text-black font-bold animate-fadeInUp"
+        //           dir="rtl"
+        //           style={{ fontFamily: "Jameel Noori Nastaleeq" }}
+        //         >
+        //           {answer.textTranslation}
+        //         </div>
+        //       )}
+        //     </div>
+        //   </label>
+        // ));
+ case "forced":
+case "sjt":
+  if (questionId === "shape1") {
+    const emojiByOptionKey: Record<string, string> = {
+      A: "🟢",
+      B: "🟦",
+      C: "🔺",
+    };
+
+    return (
+      <div className="flex flex-row gap-8 justify-center mt-2">
+        {answers?.map((answer) => {
+          const valueToStore = answer.optionKey;
+          const emoji = emojiByOptionKey[answer.optionKey];
+
+          return (
+            <label
+              key={valueToStore}
+              className="cursor-pointer flex items-center gap-2"
+            >
+              {/* ✅ radio LEFT */}
+              <input
+                type="radio"
+                name={`question-${questionId}`}
+                value={valueToStore}
+                checked={selectedAnswerValue === valueToStore}
+                onChange={() => onAnswerChange(questionId, valueToStore)}
+                className="w-3 h-4 accent-Blue"
+              />
+
+              {/* ✅ small emoji */}
+              <div className="text-xl leading-none">
+                {emoji}
               </div>
-              {/* ✅ Urdu below English when ON */}
-              {showTranslation && answer.textTranslation && (
-                <div
-                  className="text-sm text-right text-black font-bold animate-fadeInUp"
-                  dir="rtl"
-                  style={{ fontFamily: "Jameel Noori Nastaleeq" }}
-                >
-                  {answer.textTranslation}
-                </div>
-              )}
+            </label>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // ✅ Special case ONLY for shape3 (same UI as shape1)
+if (questionId === "shape3") {
+  const emojiByOptionKey: Record<string, string> = {
+    A: "🟢",
+    B: "🟦",
+    C: "🔺", // ✅ correct
+  };
+
+  return (
+    <div className="flex flex-row gap-8 justify-center mt-2">
+      {answers?.map((answer) => {
+        const valueToStore = answer.optionKey; // ✅ store optionKey
+        const emoji = emojiByOptionKey[answer.optionKey];
+
+        return (
+          <label
+            key={valueToStore}
+            className="cursor-pointer flex items-center gap-2"
+          >
+            {/* ✅ radio LEFT side */}
+            <input
+              type="radio"
+              name={`question-${questionId}`}
+              value={valueToStore}
+              checked={selectedAnswerValue === valueToStore}
+              onChange={() => onAnswerChange(questionId, valueToStore)}
+              className="w-4 h-4 accent-green1"
+            />
+
+            {/* ✅ small emoji */}
+            <div className="text-2xl leading-none">
+              {emoji}
             </div>
           </label>
-        ));
+        );
+      })}
+    </div>
+  );
+}
+
+
+        // ✅ Default SJT/Forced rendering (your existing one)
+        return answers?.map((answer) => {
+          const valueToStore = answer.id || answer.optionKey;
+
+          return (
+            <label
+              key={valueToStore}
+              className="answer-label block mb-2 cursor-pointer"
+            >
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name={`question-${questionId}`}
+                    value={valueToStore}
+                    checked={selectedAnswerValue === valueToStore}
+                    onChange={() => onAnswerChange(questionId, valueToStore)}
+                  />
+                  <span className="text-xs font-medium">{answer.text}</span>
+                </div>
+
+                {showTranslation && answer.textTranslation && (
+                  <div
+                    className="text-sm text-right text-black font-bold animate-fadeInUp"
+                    dir="rtl"
+                    style={{ fontFamily: "Jameel Noori Nastaleeq" }}
+                  >
+                    {answer.textTranslation}
+                  </div>
+                )}
+              </div>
+            </label>
+          );
+        });
+
 
       case "text":
         return (
@@ -166,7 +350,6 @@ function QuestionBlock({
           </span>
         </label>
       </div>
- 
 
 
       {/* ✅ Question Text */}
@@ -174,6 +357,12 @@ function QuestionBlock({
         <h6 className="text-sm font-semibold mb-1">
           {questionIndex + 1}. {text}
         </h6>
+
+              {/* ✅ Frontend Pattern for shape1 */}
+      {questionId === "shape1" && renderShape1Pattern()}
+      {questionId === "shape2" && renderShape2LShape()}
+      {/* ✅ Frontend Pattern for shape3 */}
+      {questionId === "shape3" && renderShape3Pattern()}
 
         {showTranslation && questionData.textTranslation && (
           <h6

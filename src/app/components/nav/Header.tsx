@@ -49,8 +49,7 @@ const Header = () => {
 {/* Services Dropdown */} 
 
 <div className="relative group"> 
-  <button className="font-sans serif font-semibold text-sm text-white duration-200 relative px-2 py-1 overflow-hidden" 
-  onClick={() => setServicesOpen(!servicesOpen)} aria-expanded={servicesOpen} > 
+  <button className="font-sans serif font-semibold text-sm text-white duration-200 relative px-2 py-1 overflow-hidden" onClick={() => setServicesOpen(!servicesOpen)} aria-expanded={servicesOpen} > 
   <span className="flex items-center text-inherit">
   <i className="fa fa-graduation-cap mr-2 text-inherit" aria-hidden="true"></i>
   Services

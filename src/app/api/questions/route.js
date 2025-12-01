@@ -9,6 +9,8 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
   text: String,
   textTranslation: String,
   formatWeight: Number, traitWeight: Number, sectionWeight: Number,
+  sectionA: [String],   // ✅ accept arrays like ["Abilities"]
+  sectionB: [String],   // ✅ accept arrays like ["MotivationInterest"]
   reverse: Boolean,
   skills: [String],
   options: [{ label: String, value: Number }],
@@ -21,6 +23,7 @@ const Question = mongoose.models.Question || mongoose.model("Question", new mong
     baseScoreValue: Number,
     primaryTraitOverride: String,
   }],
+
 }));
 
 function createLikertAnswers(skills, reverse = false) {
