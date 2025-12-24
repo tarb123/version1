@@ -1,8 +1,6 @@
- "use client";
-
+"use client";
 import React, { useMemo } from "react";
 import type { QuestionData, Answer } from "../../QuestionBlock";
-
 
 type WorkingWithNumbersScoreProps = {
   questions: QuestionData[];
@@ -10,10 +8,7 @@ type WorkingWithNumbersScoreProps = {
 };
 
 const CORRECT_OPTION_KEY_BY_ID: Record<string, string> = {
-  num1: "A",
-  num2: "C",
-  num3: "A",
-  num4: "D",
+  num1: "A", num2: "C", num3: "A", num4: "D",
 };
 
 function getSelectedOptionKey(
@@ -47,7 +42,6 @@ const WorkingWithNumbersScore: React.FC<WorkingWithNumbersScoreProps> = ({
   }, [questions]);
 
   const totalQuestions = workingWithNumbersQs.length || 4;
-
   const { scaledScore } = useMemo(() => {
     let correct = 0;
 
@@ -73,78 +67,70 @@ const WorkingWithNumbersScore: React.FC<WorkingWithNumbersScoreProps> = ({
       scaledScore: scaled,
     };
   }, [workingWithNumbersQs, responses, totalQuestions]);
-
   // ✅ Align circle to segment centers
   const indicatorLeftPct = ((scaledScore - 0.5) / 10) * 100;
 
   return (
-    <div className="w-full max-w-2xl p-2 -mb-2">
+    <div className="w-full mx-auto max-w-2xl p-2 -mb-2">
       
       {/* Header */}
-      <div className="flex items-start justify-between">
-          <h1 className="text-base text-sky-700">Working with Numbers</h1>
-          {/* <p className="text-xs font-semibold text-sky-700 mt-1">Correct: {correctCount}/{totalQuestions}</p> <p className="text-xs font-semibold text-sky-700 mt-1">Ratio: {scaledScore}/10</p> */}
+      <div className="flex items-start justify-between space-y-1">
+        <h1 className="text-base text-sky-700">Working with Numbers</h1>
+        {/* <p className="text-xs font-semibold text-sky-700 mt-1">Correct: {correctCount}/{totalQuestions}</p> <p className="text-xs font-semibold text-sky-700 mt-1">Ratio: {scaledScore}/10</p> */}
   
-          <div className="flex flex-col items-end">
-            <span className="text-xs text-black">Score (1–10)</span>
-            <span className="text-2xl font-bold text-sky-700 leading-none">{scaledScore}</span>
-          </div>
+        <div className="flex flex-col items-end">
+          <span className="text-xs text-black">Score (1–10)</span>
+          <span className="text-2xl font-bold text-sky-700 leading-none">{scaledScore}</span>
+        </div>
 
       </div>
 
       {/* Score Bar */}
-      <div className="mt-2 relative">
-          {/* ✅ Low / High labels ON bar line */}
-        <span className="absolute left-0 top-1/4 -translate-y-1/2 text-[10px] text-gray-500">Low</span>
-        <span className="absolute right-0 top-1/4 -translate-y-1/2 text-[10px] text-gray-500">High</span>
-        {/* ✅ Circle ON bar */}
-        <div className="absolute top-1/2 -translate-y-1/2 transition-all duration-300"
-          style={{ left: `${indicatorLeftPct}%`, transform: "translate(-50%, -50%)" }}
-        >
-          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-400 to-pink text-white text-xs font-bold flex items-center justify-center shadow-md border-2 border-white">
-            {scaledScore}
-          </div>
-        </div>
-
-        {/* Segments */}
-        {/* <div className="flex items-center gap-1"> */}
-        <div className="flex items-center gap-1 px-6">
-
-          {Array.from({ length: 10 }).map((_, i: number) => {
-            const index = i + 1;
-            const isFilled = index <= scaledScore;
-
-            return (
-<div
-  key={index}
-  className={[
-    "h-3 flex-1 rounded-sm transition-all duration-300",
-    isFilled ? "bg-gradient-to-r from-orange-400 to-pink" : "bg-slate-300",
-  ].join(" ")}
-  aria-label={`score-segment-${index}`}
-/>
-
-            );
-          })}
-        </div>
-
-        {/* ✅ Scale numbers 1–10 under bar */}
-        {/* <div className="flex items-center gap-1 mt-2"> */}
-          <div className="flex items-center gap-1 mt-2 px-6">
-          {Array.from({ length: 10 }).map((_, i: number) => {
-            const index = i + 1;
-            return (
-              <div key={`scale-${index}`} className="flex-1 text-center text-[10px] text-Blue">
-                {index}
-              </div>
-            );
-          })}
+     <div className="mt-2 relative ">      
+      <span className="absolute left-0 top-1/4 -translate-y-1/2 text-[10px] text-gray-500">Low</span>
+      <span className="absolute right-0 top-1/4 -translate-y-1/2 text-[10px] text-gray-500">High</span>
+      
+      {/* ✅ Circle ON bar */}
+      <div className="absolute top-1/2 -translate-y-1/2 transition-all duration-300"
+        style={{ left: `${indicatorLeftPct}%`, transform: "translate(-50%, -50%)" }}>
+          
+        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-400 to-pink text-white text-xs font-bold flex items-center justify-center shadow-md border-2 border-white">
+          {scaledScore}
         </div>
 
       </div>
-    </div>
-  );
-};
 
+      {/* Segments */}
+      {/* <div className="flex items-center gap-1"> */}
+      <div className="flex items-center gap-1 px-6">
+
+      {Array.from({ length: 10 }).map((_, i: number) => {
+      const index = i + 1;
+      const isFilled = index <= scaledScore;
+      return (
+      <div key={index} 
+      className={[ "h-3 flex-1 rounded-sm transition-all duration-300", isFilled ? "bg-gradient-to-r from-orange-400 to-pink" : "bg-slate-300",].join(" ")}
+      aria-label={`score-segment-${index}`}/>
+      );
+      })}
+      </div>
+
+      {/* ✅ Scale numbers 1–10 under bar */}
+      {/* <div className="flex items-center gap-1 mt-2"> */}
+      
+      <div className="flex items-center gap-1 mt-2 px-6">
+        {Array.from({ length: 10 }).map((_, i: number) => {
+        const index = i + 1;
+        return (
+        
+        <div key={`scale-${index}`} className="flex-1 text-center text-[10px] text-Blue">
+         {index}
+        </div>
+        );
+        })}
+      </div>
+ 
+      </div>
+    </div>
+);};
 export default WorkingWithNumbersScore;
-  

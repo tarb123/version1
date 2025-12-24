@@ -11,8 +11,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: white;
-  /* background-color:#dcdce8; */
+  background-color:#efefef;
 }
 
 .header {
@@ -83,7 +82,6 @@ h2 {
   font-size: small; /* Adjusted */
 }
 
-
 @keyframes slideInOut {
   0%, 100% {
     transform: translateX(0);
@@ -126,4 +124,38 @@ h2 {
   .mainContent {
     padding-top: -10px; /* or equal to .mobileTop height */
   }
+}
+
+/* Print / PDF helpers */
+@media print {
+.no-print {
+  display: none !important;
+}
+
+.page-break {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* Ensure colors render in PDFs */
+*{
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Remove screen background when printing */
+body {
+  background: white !important;
+}
+}
+
+/* On screen, don't actually create blank space */
+.page-break {
+  display: none;
+}
+
+@media print {
+.page-break {
+  display: block;
+}
 }

@@ -68,6 +68,9 @@ const config: Config = {
         gradientStart: '#2E3192',
         gradientEnd: '#00ab41',
       },
+      fontFamily: {
+        urdu: ["var(--font-jameel)", "serif"],
+      },
 
       spacing: {
         72: '18rem',

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import "../App.css";
+import { jameelNoori } from "./fonts";
 
 import ResponsiveNav from "./components/nav/ResponsiveNav";
 import Footer from "./footer/Footer";
 import { Toaster } from "react-hot-toast";  // ✅ Import Toaster
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,8 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}> 
+     <html lang="en" className="h-full w-full">
+ 
+      <body className={`${jameelNoori.variable} antialiased min-h-screen w-full overflow-x-hidden`}>
         <ResponsiveNav/>        
         {children}
         <Analytics />

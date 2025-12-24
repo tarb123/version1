@@ -28,9 +28,11 @@ const formatName = (label: string) => {
       pointBorderColor: '#fff', 
       pointHoverBackgroundColor: '#fff', 
       pointHoverBorderColor: 'rgba(54, 162, 235, 1)', }], }; 
+      
       const options: ChartOptions<'radar'> = { 
-        responsive: true, 
-        maintainAspectRatio: true, scales: {
+      devicePixelRatio: 2,
+      responsive: true, 
+      maintainAspectRatio: true, scales: {
   r: {
     angleLines: { display: true, color: "rgba(0,0,0,0.1)" },
     suggestedMin: 1,
@@ -67,7 +69,7 @@ const formatName = (label: string) => {
       }, }, }, }; 
         return ( 
         <div className="bigfive-chart-container "> 
-        <h1>BIG FIVE/OCEAN PROFILE</h1> 
+        <h1 className='mt-2'>BIG FIVE/OCEAN PROFILE</h1> 
         <div className="bigfive-chart"> 
           <Radar data={data} options={options} /> 
         </div> 

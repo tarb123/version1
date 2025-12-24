@@ -54,15 +54,16 @@ const DISCCircularChart: React.FC<DISCCircularProps> = ({ chartData }) => {
 
   return (
 
-    <div className="border-2 border-whitesmoke rounded-lg shadow-md py-3">
-    <h1 className="-mb-3">DISC PROFILE</h1>
-    <div className="flex items-center">
+    <div>
+    <h1 className="mb-1">DISC PROFILE</h1>
+<div className="flex flex-row sm:flex-row items-center justify-center px-1">
 
       {/* Chart */}
       <div className="relative w-60 h-60">
         <Doughnut
           data={{ datasets }}
           options={{
+            devicePixelRatio: 2,
             responsive: true,
             maintainAspectRatio: false,
             animation: false,

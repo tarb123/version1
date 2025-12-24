@@ -30,6 +30,7 @@ const MIBarChart: React.FC<MIBarChartProps> = ({ chartData, title }) => {
   };
 
   const options = {
+    devicePixelRatio: 2,
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -45,11 +46,10 @@ const MIBarChart: React.FC<MIBarChartProps> = ({ chartData, title }) => {
   };
 
   return (
-    <div className="w-full h-84 py-10 border-2 border-whitesmoke rounded-lg bg-white px-9 shadow-md">
-      <h1 className="text-center mb-3">{title}</h1>
+    // <div className="w-full h-84 -mt-5 -py-1 px-6 flex flex-col justify-center">
+    <div className="w-full h-84 mt-20 mb-12 -py-1 px-6 flex flex-col justify-center">
+      <h1 className="text-center mb-7">{title}</h1>
       <Bar data={data} options={options} />
     </div>
-  );
-};
-
+  );};
 export default MIBarChart;
