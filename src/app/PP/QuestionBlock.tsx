@@ -118,52 +118,38 @@ function QuestionBlock({
 
   const renderAnswers = () => {
     switch (type) {
-case "likert":
-  return (
+    case "likert":
+    return (
     <div className="mt-4">
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         {questionData.options?.map((option) => {
           const isSelected = selectedAnswerValue === option.value;
-
           return (
             <label
               key={option.value}
-              className={`
-                cursor-pointer select-none
-                flex items-center justify-center
-                h-9 sm:h-9 lg:h-9 2xl:h-10
-                rounded-lg
-                text-[11px] sm:text-xs lg:text-xs 2xl:text-sm
-                transition-all duration-200
-                px-2
+              className={` cursor-pointer select-none flex items-center justify-center h-9 sm:h-9 lg:h-9 2xl:h-10 rounded-lg
+                text-[11px] sm:text-xs lg:text-xs 2xl:text-sm transition-all duration-200 px-2
                 ${
                   isSelected
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-[1.03]"
-                    : "bg-whitesmoke text-black hover:bg-blue-100"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-[1.03]"
+                  : "bg-whitesmoke text-black hover:bg-blue-100"
                 }
               `}
             >
-              <input
-                type="radio"
-                name={`question-${questionId}`}
-                value={option.value}
-                checked={isSelected}
-                onChange={() => onAnswerChange(questionId, option.value)}
-                className="hidden"
-              />
+            <input type="radio" name={`question-${questionId}`} value={option.value} checked={isSelected}
+             onChange={() => onAnswerChange(questionId, option.value)} className="hidden"
+            />
 
-              <span className="text-center leading-tight">{option.label}</span>
+            <span className="text-center leading-tight">{option.label}</span>
 
-              {showTranslation && option.textTranslation && (
-                <span
-                  lang="ur"
-                  dir="rtl"
-                  className={`${urduText} text-[10px] sm:text-[10px] lg:text-[11px] 2xl:text-xs block mt-0.5 text-center`}
-                >
-                  {option.textTranslation}
-                </span>
-              )}
-            </label>
+            {showTranslation && option.textTranslation && (
+            <span lang="ur" dir="rtl"
+             className={`${urduText} text-[10px] sm:text-[10px] lg:text-[11px] 2xl:text-xs block mt-0.5 text-center`}
+            >
+             {option.textTranslation}
+            </span>
+          )}
+          </label>
           );
         })}
       </div>
@@ -174,45 +160,30 @@ case "likert":
       case "sjt":
         // ✅ Special case ONLY for shape1
         if (questionId === "shape1") {
-          const emojiByOptionKey: Record<string, string> = {
-            A: "🟢",
-            B: "🟦",
-            C: "🔺",
-          };
+          const emojiByOptionKey: Record<string, string> = { A: "🟢", B: "🟦", C: "🔺"};
+        return (
+        // ✅ Wrap on mobile, same layout on larger screens
+        <div className="flex flex-wrap sm:flex-row gap-5 sm:gap-8 justify-center mt-2">
+        {answers?.map((answer) => {
+        const valueToStore = answer.optionKey;
+        const emoji = emojiByOptionKey[answer.optionKey];
 
           return (
-            // ✅ Wrap on mobile, same layout on larger screens
-            <div className="flex flex-wrap sm:flex-row gap-5 sm:gap-8 justify-center mt-2">
-              {answers?.map((answer) => {
-                const valueToStore = answer.optionKey;
-                const emoji = emojiByOptionKey[answer.optionKey];
-
-                return (
-                  <label key={valueToStore} className="cursor-pointer flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`question-${questionId}`}
-                      value={valueToStore}
-                      checked={selectedAnswerValue === valueToStore}
-                      onChange={() => onAnswerChange(questionId, valueToStore)}
-                      className="w-4 h-4 sm:w-3 sm:h-4 lg:w-4 lg:h-4 accent-Blue"
-                    />
-                    <div className="text-2xl sm:text-xl lg:text-2xl 2xl:text-3xl leading-none">{emoji}</div>
-                  </label>
-                );
-              })}
-            </div>
-          );
-        }
+            <label key={valueToStore} className="cursor-pointer flex items-center gap-2">
+              <input type="radio" name={`question-${questionId}`} value={valueToStore} 
+              checked={selectedAnswerValue === valueToStore} onChange={() => onAnswerChange(questionId, valueToStore)}
+              className="w-4 h-4 sm:w-3 sm:h-4 lg:w-4 lg:h-4 accent-Blue"
+              />
+              <div className="text-2xl sm:text-xl lg:text-2xl 2xl:text-3xl leading-none">{emoji}</div>
+            </label>
+        );
+          })}
+          </div>
+        ); }
 
         // ✅ Special case ONLY for shape3 (same UI as shape1)
         if (questionId === "shape3") {
-          const emojiByOptionKey: Record<string, string> = {
-            A: "🟢",
-            B: "🟦",
-            C: "🔺",
-          };
-
+          const emojiByOptionKey: Record<string, string> = { A: "🟢", B: "🟦", C: "🔺"};
           return (
             <div className="flex flex-wrap sm:flex-row gap-5 sm:gap-8 justify-center mt-2">
               {answers?.map((answer) => {
@@ -221,12 +192,8 @@ case "likert":
 
                 return (
                   <label key={valueToStore} className="cursor-pointer flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`question-${questionId}`}
-                      value={valueToStore}
-                      checked={selectedAnswerValue === valueToStore}
-                      onChange={() => onAnswerChange(questionId, valueToStore)}
+                    <input type="radio" name={`question-${questionId}`} value={valueToStore}
+                      checked={selectedAnswerValue === valueToStore} onChange={() => onAnswerChange(questionId, valueToStore)}
                       className="w-4 h-4 sm:w-4 sm:h-4 lg:w-4 lg:h-4 accent-green1"
                     />
                     <div className="text-2xl sm:text-2xl lg:text-2xl 2xl:text-3xl leading-none">{emoji}</div>

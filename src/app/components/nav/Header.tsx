@@ -152,13 +152,25 @@ const Header = () => {
       <span className="font-[Jameel Noori Nastaleeq] transition-colors duration-300 text-white">Blogs</span>
       <span className="absolute bottom-0 left-0 w-0 h-[3px] bg-Red transition-all duration-300 group-hover:w-full"></span>
       </Link>
-
+{/* 
       <Link href="/Main" className="mb-2 relative text-white text-base py-1 transition duration-300 group">
         <i className="fa fa-clipboard-list fa-brain mr-2" aria-hidden="true"></i>
         <span className="font-[Jameel Noori Nastaleeq] transition-colors duration-300 text-white group-hover:text-Red">خودی</span>{' '}
         <span className="ml-1">Personality Assessment</span>
         <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-Red transition-all duration-300 group-hover:w-full"></span>
-      </Link>
+      </Link> */}
+
+        <Link href="/Main" className="mb-2 relative text-white text-base py-1 transition duration-300 group"> 
+  <i className="fa fa-clipboard-list fa-brain mr-1 text-white" aria-hidden="true"></i> 
+  <span lang="ur" className="font-urdu text-lg font-bold text-white">خودی</span>{' '} 
+  <span className="font-sans serif font-semibold text-white">Personality Assessment</span> 
+  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span> 
+  </Link>      
+  <Link href="/CRR/" className="mb-2 relative text-white text-base py-1 transition duration-300 group"> 
+  <i className="fa fa-file-alt text-white" aria-hidden="true"></i> 
+  <span className="font-sans serif font-semibold text-white text-sm">CRR</span> 
+  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span> 
+  </Link> 
 
       <div className="text-white">
         <i className="fa fa-graduation-cap mr-2 text-inherit" aria-hidden="true"></i>

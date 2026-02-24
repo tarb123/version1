@@ -1,8 +1,8 @@
 body {
-font-family: "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", serif;
+    font-family: "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", sans-serif;
     line-height: 1.6;
     /* padding: 20px; */
-    background-color: black;
+    background-color: rgb(255, 101, 101);
     color: #333;
     gap:20px
   }
@@ -257,22 +257,24 @@ font-family: "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", serif;
   display: inline-block;
 }
 
-  .score-bar-container {
-    background-color: #e9ecef; /* Light grey background */
-    border-radius: 4px;
-    height: 10px; /* Bar height */
-    overflow: hidden;
-    width: 100%; /* Make container full width */
-    border: 1px solid #dee2e6; /* Subtle border */
-    
-  }
+.score-bar-container {
+  margin-bottom: -5px; /* ✅ small gap, consistent */
+  margin-top: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid #dee2e6;
+}
+
   
   .score-bar {
-     background-color: #3498db; /* Blue fill color */
-    height: 100%;
-    border-radius: 3px; /* Slightly rounded inner bar */
-    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth animation */
-    min-width: 5px; /* Ensure even tiny scores show a sliver */
+  background-color: #3498db; /* Blue fill color */
+  height: 100%;
+  border-radius: 3px; /* Slightly rounded inner bar */
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth animation */
+  min-width: 5px; /* Ensure even tiny scores show a sliver */
   }
   
   /* --- Styles for Spider Chart Containers --- */

@@ -15,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
     "plugins": [
@@ -37,7 +37,8 @@
     "backend/personality/server.tsx",
     "backend/personality/server.js",
     "src/app/PP/QuestionBlock copy",
-    "src/app/M/page.tsx"
+    "src/app/M/page.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

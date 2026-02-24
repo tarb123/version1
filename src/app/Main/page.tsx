@@ -1,19 +1,12 @@
- 'use client';
-
+'use client';
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import QuestionBlock from '../PP/QuestionBlock';
 import type { Answer, QuestionData } from '../PP/QuestionBlock';
 import ResultsPage from '../PP/ResultsPage';
-import {
-  skillList,
-  traitList,
-  skillCategoryMapping,
-  broadSkillCategories,
-  TraitCategory,
-  careerDatabase,
-} from '../quizData';
+import { skillList, traitList, skillCategoryMapping, broadSkillCategories, TraitCategory} from '../quizData';
 import CustomAlert from '../components/CustomAlert';
+import { AllCareerProfiles, CareerAnalyticsProfile, selectTopMatchesWithFieldCap } from "../careerAnalytics";
 
 type SelectedAnswers = Record<string, string | number>;
 
@@ -33,7 +26,7 @@ interface CheckData {
   exists: boolean;
   candidate: Candidate;
 }
-
+ 
 function App() {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [showSlider, setShowSlider] = useState(false);
@@ -45,7 +38,7 @@ function App() {
   const [careerMatches, setCareerMatches] = useState<{ name: string; score: number }[] | null>(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const memoizedCareerDb = useMemo(() => careerDatabase, []);
+  // const memoizedCareerDb = useMemo(() => careerDatabase, []);
 
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswers>({});
   const [checkData, setCheckData] = useState<CheckData | null>(null);
@@ -344,70 +337,71 @@ function App() {
     normalizedCategoryScores['LogicalMathematical'] = normalizedTraitScores['LogicalMathematical'];
     normalizedCategoryScores['Spatial'] = normalizedTraitScores['Spatial'];
 
-    const matches = calculateCareerMatches(normalizedTraitScores, normalizedSkillScores);
+    const matches = calculateCareerMatches(normalizedTraitScores, normalizedCategoryScores);
+
     setCareerMatches(matches);
 
     setQuizState('results');
     window.scrollTo(0, 0);
   };
 
-  type ScoreRecord = Record<string, number>;
+type ScoreRecord = Record<string, number>;
 
-  const calculateCareerMatches = (normTraitScores: ScoreRecord, normCategoryScores: ScoreRecord) => {
-    const results = memoizedCareerDb.map((career) => {
-      const traits = career.traits as Record<string, number>;
-      let traitScoreSum = 0;
-      let traitWeightSum = 0;
+const calculateCareerMatches = (normTraitScores: ScoreRecord, normCategoryScores: ScoreRecord) => {
+  const results = AllCareerProfiles.map((career: CareerAnalyticsProfile) => {
+    const traits = career.traits as Record<string, number>;
+    let traitScoreSum = 0;
+    let traitWeightSum = 0;
 
-      for (const traitName in traits) {
-        const traitKey = traitName === 'Openness to Experience' ? 'Openness' : traitName;
-        const candidateScore = normTraitScores[traitKey];
-        const weight = traits[traitName];
+    for (const traitName in traits) {
+      const traitKey = traitName === "Openness to Experience" ? "Openness" : traitName;
+      const candidateScore = normTraitScores[traitKey];
+      const weight = traits[traitName];
 
-        if (candidateScore !== undefined && weight !== undefined) {
-          traitScoreSum += candidateScore * weight;
-          traitWeightSum += weight;
-        }
+      if (candidateScore !== undefined && weight !== undefined) {
+        traitScoreSum += candidateScore * weight;
+        traitWeightSum += weight;
       }
+    }
 
-      const traitMatch = traitWeightSum > 0 ? traitScoreSum / traitWeightSum : 0;
+    const traitMatch = traitWeightSum > 0 ? traitScoreSum / traitWeightSum : 0;
 
-      let skillScoreSum = 0;
-      let skillWeightSum = 0;
+    let skillScoreSum = 0;
+    let skillWeightSum = 0;
 
-      for (const skillCatName in career.skills) {
-        let categoryKey = skillCatName;
-        if (skillCatName === 'Analytical & Problem-Solving') categoryKey = 'AnalyticalProblemSolving';
-        if (skillCatName === 'Communication & Influence') categoryKey = 'CommunicationInfluence';
-        if (skillCatName === 'Self-Management') categoryKey = 'SelfManagement';
-        if (skillCatName === 'Interpersonal & Team') categoryKey = 'InterpersonalTeam';
-        if (skillCatName === 'Leadership & Initiative') categoryKey = 'LeadershipInitiative';
-        if (skillCatName === 'Learning & Development') categoryKey = 'LearningDevelopment';
-        if (skillCatName === 'Ethical Professional') categoryKey = 'EthicalProfessional';
-        if (skillCatName === 'Logical-Mathematical Intelligence') categoryKey = 'LogicalMathematical';
-        if (skillCatName === 'Spatial Intelligence') categoryKey = 'Spatial';
+    for (const skillCatName in career.skills) {
+      let categoryKey = skillCatName;
+      if (skillCatName === "Analytical & Problem-Solving") categoryKey = "AnalyticalProblemSolving";
+      if (skillCatName === "Communication & Influence") categoryKey = "CommunicationInfluence";
+      if (skillCatName === "Self-Management") categoryKey = "SelfManagement";
+      if (skillCatName === "Interpersonal & Team") categoryKey = "InterpersonalTeam";
+      if (skillCatName === "Leadership & Initiative") categoryKey = "LeadershipInitiative";
+      if (skillCatName === "Learning & Development") categoryKey = "LearningDevelopment";
+      if (skillCatName === "Ethical Professional") categoryKey = "EthicalProfessional";
+      if (skillCatName === "Logical-Mathematical Intelligence") categoryKey = "LogicalMathematical";
+      if (skillCatName === "Spatial Intelligence") categoryKey = "Spatial";
 
-        const candidateScore = normCategoryScores[categoryKey];
-        const weight = career.skills[categoryKey as keyof typeof career.skills];
+      const candidateScore = normCategoryScores[categoryKey];
+      const weight = (career.skills as any)[categoryKey];
 
-        if (candidateScore !== undefined && weight !== undefined) {
-          skillScoreSum += candidateScore * weight;
-          skillWeightSum += weight;
-        } else {
-          console.warn(`Missing score or weight for category ${categoryKey} in career ${career.name}`);
-        }
+      if (candidateScore !== undefined && weight !== undefined) {
+        skillScoreSum += candidateScore * weight;
+        skillWeightSum += weight;
       }
+    }
 
-      const skillMatch = skillWeightSum > 0 ? skillScoreSum / skillWeightSum : 0;
+    const skillMatch = skillWeightSum > 0 ? skillScoreSum / skillWeightSum : 0;
 
-      const overallMatch = traitMatch * 0.4 + skillMatch * 0.6;
+    const overallMatch = traitMatch * 0.4 + skillMatch * 0.6;
 
-      return { name: career.name, score: parseFloat(overallMatch.toFixed(1)) };
-    });
+    return { name: career.name, score: parseFloat(overallMatch.toFixed(1)) };
+  });
 
-    results.sort((a, b) => b.score - a.score);
-    return results;
-  };
+  results.sort((a, b) => b.score - a.score);
+
+  // ✅ Enforce: Top 6, max 2 from same field
+  return selectTopMatchesWithFieldCap(results, 6, 2);
+};
 
   const handleRestart = () => {
     setSelectedAnswers({});
@@ -642,7 +636,7 @@ function App() {
           skillScores={finalScores}
           traitScores={traitScores}
           skillCategories={skillCategoryMapping}
-          careerMatches={careerMatches}
+          careerMatches={careerMatches} // ✅ now valid Match[]
           onRestart={handleRestart}
           candidateName={String(selectedAnswers['INFO-NAME'] || '')}
           candidateEmail={String(selectedAnswers['INFO-EMAIL'] || '')}

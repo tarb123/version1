@@ -6,14 +6,9 @@ type Gap = "L" | "M" | "H";
 type Confidence = "Low" | "Med" | "High";
 
 type CandidateDetails = {
-  candidateName: string;
-  targetRoleNow: string;
-  targetRoleNext: string;
-  level: string;
-  assessedBy: string;
-  organization: string;
-  reportDate: string;
-  cirReference: string;
+  candidateName: string; targetRoleNow: string; targetRoleNext: string; 
+  level: string; assessedBy: string;
+ organization: string; reportDate: string; cirReference: string;
 };
 
 type WorkPull = { id: string; item: string; score?: Score1to5 };
@@ -145,19 +140,19 @@ function clamp(n: number, min: number, max: number) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-lg font-semibold tracking-tight mt-8 mb-3">
+    <h2 className="text-lg font-semibold tracking-tight mt-8 mb-3 px-6">
       {children}
     </h2>
   );
 }
 
 function SubTitle({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-base font-semibold mt-5 mb-2">{children}</h3>;
+  return <h3 className="text-base text-black font-semibold mt-5 mb-2 px-6">{children}</h3>;
 }
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-medium text-slate-600 mb-1">{children}</div>
+    <div className="text-xs font-medium text-slate-700 mb-1">{children}</div>
   );
 }
 
@@ -540,90 +535,60 @@ export default function CRRPage() {
     <div className="a4-sheet mx-auto max-w-[210mm] bg-white print:bg-white print:max-w-none">
 
         {/* Header / Actions */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between print:hidden">
+        <div className="flex flex-col gap-3 px-10  md:flex-row md:items-end md:justify-between print:hidden">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Candidate Readiness Report (CRR) — 5E</h1>
+            <h1 className="mt-10 px-18 text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl font-semibold">Candidate Readiness Report — 5E</h1>
             <p className="text-sm text-slate-600">
-              Flow: Engagement → Excellence → Element → Energy (heat applied) → Earning
+              Flow: 
+              Engagement → Excellence → Element → Energy (heat applied) → Earning
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button onClick={() => window.print()}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50">Download PDF (A4)
-            </button>
 
-          </div>
         </div>
 
         {/* Candidate details */}
         <SectionTitle>Candidate details</SectionTitle>
-        <Card>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+         
+          <div className="px-8 grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <Label>Candidate name</Label>
-              <Input
-                value={state.details.candidateName}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, candidateName: v } }))}
-              />
+              <Input value={state.details.candidateName} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, candidateName: v } }))}/>
             </div>
             <div>
               <Label>Organization</Label>
-              <Input
-                value={state.details.organization}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, organization: v } }))}
-              />
+              <Input value={state.details.organization} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, organization: v } }))}/>
             </div>
             <div>
               <Label>Target role (now)</Label>
-              <Input
-                value={state.details.targetRoleNow}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, targetRoleNow: v } }))}
-              />
+              <Input value={state.details.targetRoleNow} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, targetRoleNow: v } }))}/>
             </div>
             <div>
               <Label>Target role (next)</Label>
-              <Input
-                value={state.details.targetRoleNext}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, targetRoleNext: v } }))}
-              />
+              <Input value={state.details.targetRoleNext} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, targetRoleNext: v } }))} />
             </div>
             <div>
               <Label>Level</Label>
-              <Input
-                value={state.details.level}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, level: v } }))}
-              />
+              <Input value={state.details.level} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, level: v } }))}/>
             </div>
             <div>
               <Label>Assessed by</Label>
-              <Input
-                value={state.details.assessedBy}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, assessedBy: v } }))}
-              />
+              <Input value={state.details.assessedBy} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, assessedBy: v } }))}/>
             </div>
             <div>
               <Label>Report date</Label>
-              <Input
-                type="date"
-                value={state.details.reportDate}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, reportDate: v } }))}
-              />
+              <Input type="date" value={state.details.reportDate} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, reportDate: v } }))}/>
             </div>
             <div>
               <Label>CIR reference (version/date)</Label>
-              <Input
-                value={state.details.cirReference}
-                onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, cirReference: v } }))}
-              />
+              <Input value={state.details.cirReference} onChange={(v) => setState((s) => ({ ...s, details: { ...s.details, cirReference: v } }))}/>
             </div>
           </div>
-        </Card>
+       
 
         {/* Step 0 */}
         <SectionTitle>Step 0 — CIR inputs (copy from CIR)</SectionTitle>
-        <Card>
           <SubTitle>Top work pulls (3 items + scores)</SubTitle>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          <div className="px-8 grid grid-cols-1 gap-3 md:grid-cols-3">
             {state.step0.workPulls.map((wp, idx) => (
               <div key={wp.id} className="rounded-xl border border-slate-200 p-3">
                 <div className="text-xs font-medium text-slate-600 mb-2">Pull {idx + 1}</div>
@@ -660,7 +625,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Top activities to test (4 items)</SubTitle>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="px-8 grid grid-cols-1 gap-3 md:grid-cols-2">
             {state.step0.activitiesToTest.map((it, idx) => (
               <div key={it.id}>
                 <Label>Activity {idx + 1}</Label>
@@ -683,7 +648,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Top strengths to test (3 items)</SubTitle>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          <div className="px-8 grid grid-cols-1 gap-3 md:grid-cols-3">
             {state.step0.strengthsToTest.map((it, idx) => (
               <div key={it.id}>
                 <Label>Strength {idx + 1}</Label>
@@ -705,7 +670,7 @@ export default function CRRPage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2">
+          <div className="px-8 grid grid-cols-1 gap-4 mt-5 md:grid-cols-2">
             <div>
               <Label>Early Element hypothesis (1 line)</Label>
               <TextArea
@@ -723,16 +688,14 @@ export default function CRRPage() {
               />
             </div>
           </div>
-        </Card>
 
         {/* A1 */}
         <SectionTitle>A1 — Engagement scan</SectionTitle>
-        <Card>
-          <p className="text-sm text-slate-600 mb-4">
+          <p className="px-6 text-sm text-slate-600 mb-4">
             List tasks you naturally choose or want to repeat. Score 1–5 (1 Avoid / 3 Neutral / 5 Seek it).
           </p>
 
-          <div className="overflow-x-auto">
+          <div className="px-6 overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead className="text-left text-xs text-slate-600">
                 <tr className="border-b">
@@ -809,20 +772,18 @@ export default function CRRPage() {
 
           <button
             onClick={addA1Row}
-            className="mt-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 print:hidden"
+            className="mt-3 ml-6 bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2 2xl:px-6 2xl:py-4 text-sm font-semibold text-white shadow-sm"
           >
             + Add row
           </button>
-        </Card>
 
         {/* A2 */}
         <SectionTitle>A2 — Excellence evidence</SectionTitle>
-        <Card>
-          <p className="text-sm text-slate-600 mb-4">
+           <p className="px-6 text-sm text-slate-600 mb-4">
             Only write capabilities you can prove (metric, feedback, artifact link). Score 1–5 (1 Needs help / 3 Guided / 5 Independent + consistent quality).
           </p>
 
-          <div className="overflow-x-auto">
+          <div className="px-6 overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead className="text-left text-xs text-slate-600">
                 <tr className="border-b">
@@ -906,16 +867,14 @@ export default function CRRPage() {
 
           <button
             onClick={addA2Row}
-            className="mt-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 print:hidden"
+            className="mt-3 ml-6 bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2 2xl:px-6 2xl:py-4 text-sm font-semibold text-white shadow-sm"
           >
             + Add row
           </button>
-        </Card>
-
+ 
         {/* A3 */}
         <SectionTitle>A3 — Element discovery (validated overlap)</SectionTitle>
-        <Card>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm">
+           <div className="ml-6 mr-6 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm">
             <div className="font-medium">Auto-suggested overlaps (exact-match, score 4–5 in BOTH A1 and A2):</div>
             <div className="mt-1 text-slate-700">
               {computedOverlaps.length ? (
@@ -931,7 +890,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Overlap items (manual / validated)</SubTitle>
-          <div className="overflow-x-auto mt-2">
+          <div className="px-6 overflow-x-auto mt-2">
             <table className="min-w-full text-sm">
               <thead className="text-left text-xs text-slate-600">
                 <tr className="border-b">
@@ -1014,13 +973,13 @@ export default function CRRPage() {
 
           <button
             onClick={addOverlapRow}
-            className="mt-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 print:hidden"
+            className="mt-3 ml-6 bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2 2xl:px-6 2xl:py-4 text-sm font-semibold text-white shadow-sm"
           >
             + Add overlap
           </button>
 
           <SubTitle>Element themes (choose 1–2)</SubTitle>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <div className="px-6 grid grid-cols-1 gap-2 md:grid-cols-2">
             <Checkbox
               checked={state.a3.themes.communicationPeople}
               onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, themes: { ...s.a3.themes, communicationPeople: v } } }))}
@@ -1060,15 +1019,17 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Element statement</SubTitle>
-          <TextArea
+          <div className="px-6">
+            <TextArea
             value={state.a3.elementStatement}
             onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, elementStatement: v } }))}
             placeholder="I am in my element when I ____ for ____ using ____ to achieve ____."
             rows={3}
-          />
-
+            />
+          </div>
+ 
           <SubTitle>Element proof pack (3 bullets + 1 artifact link)</SubTitle>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          <div className="px-6 grid grid-cols-1 gap-3 md:grid-cols-3">
             <div>
               <Label>Proof 1</Label>
               <Input value={state.a3.proof1} onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, proof1: v } }))} />
@@ -1082,7 +1043,7 @@ export default function CRRPage() {
               <Input value={state.a3.proof3} onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, proof3: v } }))} />
             </div>
           </div>
-          <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="px-6 mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
               <Label>Artifact link / reference</Label>
               <Input value={state.a3.artifactLink} onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, artifactLink: v } }))} />
@@ -1092,12 +1053,10 @@ export default function CRRPage() {
               <SelectScore value={state.a3.elementScore} onChange={(v) => setState((s) => ({ ...s, a3: { ...s.a3, elementScore: v } }))} />
             </div>
           </div>
-        </Card>
-
+ 
         {/* A4 */}
         <SectionTitle>A4 — Energy and environment (heat applied)</SectionTitle>
-        <Card>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+           <div className="px-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <Label>Weekly capacity (hours/week)</Label>
               <input
@@ -1123,7 +1082,7 @@ export default function CRRPage() {
             </div>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 px-6">
             <Label>Constraints</Label>
             <TextArea
               value={state.a4.constraints}
@@ -1133,7 +1092,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Guardrails</SubTitle>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <div className="px-6 grid grid-cols-1 gap-2 md:grid-cols-2">
             <div className="flex items-center gap-3">
               <Checkbox
                 checked={state.a4.guardrails.maxHrsEnabled}
@@ -1244,7 +1203,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Risk flags</SubTitle>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <div className="px-6 grid grid-cols-1 gap-2 md:grid-cols-2">
             <Checkbox
               checked={state.a4.riskFlags.inconsistentSleep}
               onChange={(v) => setState((s) => ({ ...s, a4: { ...s.a4, riskFlags: { ...s.a4.riskFlags, inconsistentSleep: v } } }))}
@@ -1281,29 +1240,27 @@ export default function CRRPage() {
             </div>
           </div>
 
-          <div className="mt-4">
-            <Label>Energy score (1–5)</Label>
+          <div className="mt-4 px-6">
+            <Label>Energy score (1–5): </Label>
             <SelectScore
               value={state.a4.energyScore}
               onChange={(v) => setState((s) => ({ ...s, a4: { ...s.a4, energyScore: v } }))}
             />
           </div>
-        </Card>
-
+ 
         {/* A5 */}
         <SectionTitle>A5 — Earning (role alignment + 2-week plan)</SectionTitle>
-        <Card>
-          <p className="text-sm text-slate-600 mb-4">
+           <p className="px-6 text-sm text-slate-600 mb-4">
             Use 3–5 job posts or KRAs. Fill the top gaps and define the next 2-week actions.
           </p>
 
-          <div className="overflow-x-auto">
+          <div className="px-6 overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead className="text-left text-xs text-slate-600">
                 <tr className="border-b">
                   <th className="py-2 pr-3">Role requirement</th>
                   <th className="py-2 pr-3">Current proof</th>
-                  <th className="py-2 pr-3 w-24">Gap</th>
+                  <th className="py-2 pr-3 w-24">Gap (L/M/H)</th>
                   <th className="py-2 pr-3">Next 2-week action</th>
                   <th className="py-2 w-10" />
                 </tr>
@@ -1374,24 +1331,22 @@ export default function CRRPage() {
 
           <button
             onClick={addA5Row}
-            className="mt-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 print:hidden"
+            className="mt-3 ml-6 bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-2 2xl:px-6 2xl:py-4 text-sm font-semibold text-white shadow-sm"
           >
             + Add row
           </button>
 
-          <div className="mt-4">
+          <div className="px-6 mt-4">
             <Label>Earning score (1–5)</Label>
             <SelectScore
               value={state.a5.earningScore}
               onChange={(v) => setState((s) => ({ ...s, a5: { ...s.a5, earningScore: v } }))}
             />
           </div>
-        </Card>
-
+ 
         {/* Final snapshot */}
         <SectionTitle>Final 5E snapshot</SectionTitle>
-        <Card>
-          <div className="overflow-x-auto">
+           <div className="px-6 overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead className="text-left text-xs text-slate-600">
                 <tr className="border-b">
@@ -1454,7 +1409,7 @@ export default function CRRPage() {
           </div>
 
           <SubTitle>Readiness decision</SubTitle>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+          <div className="px-6 grid grid-cols-1 gap-2 md:grid-cols-3">
             <Radio
               name="readiness"
               checked={state.finalSnapshot.readinessDecision === "ReadyNow"}
@@ -1518,7 +1473,7 @@ export default function CRRPage() {
           )}
 
           <SubTitle>Mentor / sponsor validation</SubTitle>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+          <div className="px-6 grid grid-cols-1 gap-2 md:grid-cols-3">
             <Radio
               name="mentorDecision"
               checked={state.finalSnapshot.mentorDecision === "agree"}
@@ -1554,7 +1509,7 @@ export default function CRRPage() {
             </div>
           )}
 
-          <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
+          <div className="px-6 mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
             <div>
               <Label>Mentor / sponsor name</Label>
               <Input
@@ -1578,8 +1533,7 @@ export default function CRRPage() {
               />
             </div>
           </div>
-        </Card>
-
+ 
         <div className="py-10 print:hidden text-center text-xs text-slate-500">
           Tip: Use <span className="font-medium">Print</span> to generate a PDF from your browser.
         </div>
